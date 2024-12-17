@@ -14,7 +14,7 @@ public class BookingRental{
     public BookingRental(int booking_rental_id){};
 
     public static Scanner stdin = new Scanner(System.in);
-    public void viewAllBookingRentals(Connection conn, int customer_id) {
+    public static void viewAllBookingRentals(Connection conn, int customer_id) {
 
         System.out.println("Please enter the booking ID:");
         try {
@@ -48,7 +48,7 @@ public class BookingRental{
     }
 
 
-    public  void createBookingRental(int payment_id, String registration_plate, int dropoff_location_id, int customer_id) {
+    public static void createBookingRental(int payment_id, String registration_plate, int dropoff_location_id, int customer_id) {
         String insertQuery = "INSERT INTO booking_rentals (payment_id, registration_plate, dropoff_location_id, customer_id, suspend) VALUES (?, ?, ?, ?, ?)";
         try(Connection conn = Main.establishConnection()){
             PreparedStatement stmt = conn.prepareStatement(insertQuery);

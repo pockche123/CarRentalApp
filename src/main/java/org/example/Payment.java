@@ -157,7 +157,7 @@ public class Payment {
             insertStmt.setString(2, payment.getCard_number());
             insertStmt.setString(3, payment.getExpiry_date());
             insertStmt.setString(4, payment.getCvc());
-            insertStmt.executeUpdate();
+            insertStmt.execute();
 
             // Retrieve the generated payment ID
             selectStmt.setString(1, payment.getCard_number());

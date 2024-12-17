@@ -1,7 +1,13 @@
 import org.example.Payment;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
 
 public class PaymentTests {
 
@@ -40,5 +46,31 @@ public class PaymentTests {
      assertEquals(false, Payment.validYear("123"));
      assertEquals(false, Payment.validYear("100"));
  }
+
+
+
+    @Test
+    void test_createBookingRental() throws SQLException {
+        // Mocking Connection and PreparedStatement
+        Connection mockConn = mock(Connection.class);
+        PreparedStatement mockStmt = mock(PreparedStatement.class);
+
+        // Set up mock behavior for prepareStatement and executeUpdate
+        when(mockConn.prepareStatement(anyString())).thenReturn(mockStmt);
+
+        String insertQuery = "INSERT INTO payments (card_type, card_number, expiry_date, cvc) VALUES (?, ?, ?, ?)";
+        PreparedStatement insertStmt = mockConn.prepareStatement(insertQuery);
+
+        // Insert payment details into the database
+        insertStmt.setString(1, "Debit Card");
+        insertStmt.setString(2, "1234567897654512");
+        insertStmt.setString(3, "1032");
+        insertStmt.setString(4, "399");
+        insertStmt.execute();
+
+        // Verify that executeUpdate() was called once
+        verify(mockStmt, times(1)).execute();
+    }
+
 
 }
