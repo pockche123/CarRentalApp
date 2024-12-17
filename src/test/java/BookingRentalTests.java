@@ -1,16 +1,13 @@
 import org.example.BookingRental;
-import org.example.Main;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import static org.mockito.Mockito.*;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+
 import java.sql.*;
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.Scanner;
 
-class BookingRentalTest {
+class BookingRentalTests {
 
     @Mock
     BookingRental bookingRental = new BookingRental();
