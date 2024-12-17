@@ -76,10 +76,10 @@ class BookingRentalTests {
         stmt.setInt(3, 4);
         stmt.setInt(4, 7);
         stmt.setBoolean(5, false);
-        stmt.execute();
+        stmt.executeUpdate();
 
         // Verify if execute was called
-        verify(mockStmt, times(1)).execute();
+        verify(mockStmt, times(1)).executeUpdate();
     }
 
 }

@@ -66,10 +66,10 @@ public class PaymentTests {
         insertStmt.setString(2, "1234567897654512");
         insertStmt.setString(3, "1032");
         insertStmt.setString(4, "399");
-        insertStmt.execute();
+        insertStmt.executeUpdate();
 
         // Verify that executeUpdate() was called once
-        verify(mockStmt, times(1)).execute();
+        verify(mockStmt, times(1)).executeUpdate();
     }
 
 

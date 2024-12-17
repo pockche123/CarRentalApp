@@ -48,7 +48,7 @@ public class BookingRental{
     }
 
 
-    public static void createBookingRental(int payment_id, String registration_plate, int dropoff_location_id, int customer_id) {
+    public static boolean createBookingRental(int payment_id, String registration_plate, int dropoff_location_id, int customer_id) {
         String insertQuery = "INSERT INTO booking_rentals (payment_id, registration_plate, dropoff_location_id, customer_id, suspend) VALUES (?, ?, ?, ?, ?)";
         try(Connection conn = Main.establishConnection()){
             PreparedStatement stmt = conn.prepareStatement(insertQuery);
@@ -57,7 +57,10 @@ public class BookingRental{
             stmt.setInt(3, dropoff_location_id);
             stmt.setInt(4, customer_id);
             stmt.setBoolean(5,false);
-            stmt.execute();
+
+            int rowsAffected = stmt.executeUpdate();
+
+            return rowsAffected >0;
 
 
         } catch(SQLException e){

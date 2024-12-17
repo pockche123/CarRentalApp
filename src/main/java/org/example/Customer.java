@@ -39,7 +39,7 @@ public class Customer
 
     }
 
-    public static void registerCustomer(String first_name, String last_name, String address, String username, String password) {
+    public static boolean  registerCustomer(String first_name, String last_name, String address, String username, String password) {
 
         String insertQuery = "INSERT INTO customers (first_name, last_name, address, username, password) VALUES (?,?,?,?,?)";
         try(Connection conn = Main.establishConnection()){
@@ -49,11 +49,16 @@ public class Customer
             stmt.setString(3, address);
             stmt.setString(4, username);
             stmt.setString(5,password);
-            stmt.execute();
+
+            int rowsAffected = stmt.executeUpdate();
+
+
+            return rowsAffected > 0;
 
 
         } catch(SQLException e){
             throw new RuntimeException(e);
+
 
         }
     }
