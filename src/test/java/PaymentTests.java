@@ -17,16 +17,28 @@ public class PaymentTests {
  }
 
  @Test
-    void test_idValidMonthTrue(){
+    void test_isValidMonthTrue(){
      assertEquals(true, Payment.validMonth("12"));
      assertEquals(true, Payment.validMonth("1"));
 
  }
 
  @Test
-    void test_idValidMonthFalse(){
+    void test_isValidMonthFalse(){
      assertEquals(false, Payment.validMonth("134"));
      assertEquals(false, Payment.validMonth("1fadsf"));
+ }
+
+ @Test
+    void test_isValidYearTrue(){
+     assertEquals(true, Payment.validYear("34"));
+     assertEquals(true, Payment.validYear("99"));
+ }
+
+ @Test
+    void test_isValidYearFalse(){
+     assertEquals(false, Payment.validYear("123"));
+     assertEquals(false, Payment.validYear("100"));
  }
 
 }
