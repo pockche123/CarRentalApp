@@ -1,7 +1,7 @@
 package org.example;
 
 
-import java.sql.SQLOutput;
+import java.sql.*;
 import java.util.Scanner;
 
 public class Payment {
@@ -9,7 +9,7 @@ public class Payment {
     private String card_type;
     private String card_number;
     private String expiry_date;
-    private String cvv;
+    private String cvc;
     public static Scanner stdin = new Scanner(System.in);
     public Payment(){};
 
@@ -45,11 +45,11 @@ public class Payment {
     public void setExpiry_date(String expiry_date) {
         this.expiry_date = expiry_date;
     }
-    public String getCvv() {
-        return cvv;
+    public String getCvc() {
+        return cvc;
     }
-    public void setCvv(String cvv) {
-        this.cvv = cvv;
+    public void setCvv(String cvc) {
+        this.cvc = cvc;
     }
 
 
@@ -92,9 +92,7 @@ public class Payment {
 
 
 
-    public static void paymentValidation() {
-
-        Payment payment = new Payment();
+    public static void paymentValidation(Payment payment) {
 
         System.out.println("Please enter a card_type: ");
         System.out.println("1. Credit Card");
@@ -109,10 +107,8 @@ public class Payment {
         System.out.println("Please enter a card_number next (16 digits) : ");
         String card_number = stdin.nextLine();
 
-        while(!isNumeric(card_number) && card_number.trim().length() != 16){
-
-            System.err.println("Card number has to be number with 16 digits. Currently, the length is " + card_number.trim().length());
-
+        while(!isNumeric(card_number) || card_number.trim().length() != 16 || card_number.charAt(0) == '0'){
+            System.err.println("Card number has to be a valid number with 16 digits. Currently, the length is " + card_number.trim().length());
             card_number = stdin.nextLine();
 
         }
@@ -136,16 +132,51 @@ public class Payment {
         System.out.println("Please enter a CVC number: ");
         String cvc = stdin.nextLine();
 
-        while(!isNumeric(cvc) || (cvc.length()!= 3 && cvc.length()!= 4)){
+        while(!isNumeric(cvc) || (cvc.length()!= 3 && cvc.length()!= 4)) {
             System.err.println("Invalid CVC number");
             cvc = stdin.nextLine();
 
         }
 
-
-
-
+        payment.setCard_type(card_type.equals("1") ? "Credit Card" : "Debit Card");
+        payment.setCard_number(card_number);
+        payment.setExpiry_date(expiry_date);
+        payment.setCvv(cvc);
     }
+
+    public static int createPayment(Payment payment) {
+        String insertQuery = "INSERT INTO payments (card_type, card_number, expiry_date, cvc) VALUES (?, ?, ?, ?)";
+        String selectQuery = "SELECT payment_id FROM payments WHERE card_number = ?";
+
+        try (Connection conn = Main.establishConnection();
+             PreparedStatement insertStmt = conn.prepareStatement(insertQuery);
+             PreparedStatement selectStmt = conn.prepareStatement(selectQuery)) {
+
+            // Insert payment details into the database
+            insertStmt.setString(1, payment.getCard_type());
+            insertStmt.setString(2, payment.getCard_number());
+            insertStmt.setString(3, payment.getExpiry_date());
+            insertStmt.setString(4, payment.getCvc());
+            insertStmt.executeUpdate();
+
+            // Retrieve the generated payment ID
+            selectStmt.setString(1, payment.getCard_number());
+            try (ResultSet rs = selectStmt.executeQuery()) {
+                if (rs.next()) {
+                    payment.setPayment_id(rs.getInt("payment_id"));
+                    return rs.getInt("payment_id");
+                } else {
+                    throw new RuntimeException("Failed to retrieve payment ID.");
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Database error: " + e.getMessage(), e);
+        }
+    }
+
+
+
 
 
 

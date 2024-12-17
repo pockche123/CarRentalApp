@@ -16,15 +16,14 @@ public class Main {
 
         Customer customer = new Customer();
 
+        Payment payment = new Payment();
 
-        Payment.paymentValidation();
-        BookingRental.viewAllBookingRentals(establishConnection(), customer.getCustomer_id());
-
-
+        Payment.paymentValidation(payment);
+        int payment_id = Payment.createPayment(payment);
+//        BookingRental.viewAllBookingRentals(establishConnection(), customer.getCustomer_id());
+        System.out.println("this is the payment id: "+ payment_id);
 
         Location.createLocation();
-
-
     }
 
     public static Connection establishConnection() {
