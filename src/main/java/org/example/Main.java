@@ -17,7 +17,7 @@ public class Main {
         Customer customer = new Customer();
 
 
-        Payment.createPayment();
+        Payment.paymentValidation();
         BookingRental.viewAllBookingRentals(establishConnection(), customer.getCustomer_id());
 
 

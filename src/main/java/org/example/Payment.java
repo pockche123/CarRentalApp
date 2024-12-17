@@ -63,7 +63,36 @@ public class Payment {
         }
     }
 
-    public static void createPayment() {
+    public static boolean validMonth(String month) {
+        if (month == null || !isNumeric(month)) {
+            return false; // Null or non-numeric input is invalid
+        }
+
+        try {
+            int monthNumber = Integer.parseInt(month);
+            return monthNumber >= 1 && monthNumber <= 12;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public static boolean validYear(String month) {
+        if (month == null || !isNumeric(month)) {
+            return false; // Null or non-numeric input is invalid
+        }
+
+        try {
+            int monthNumber = Integer.parseInt(month);
+            return monthNumber >= 1 && monthNumber < 100;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+
+
+
+    public static void paymentValidation() {
 
         Payment payment = new Payment();
 
@@ -77,7 +106,7 @@ public class Payment {
             System.err.println("Please enter a valid card type.");
             card_type = stdin.nextLine();
         }
-        System.out.println("Please enter a card_number next: ");
+        System.out.println("Please enter a card_number next (16 digits) : ");
         String card_number = stdin.nextLine();
 
         while(!isNumeric(card_number) && card_number.trim().length() != 16){
@@ -87,10 +116,38 @@ public class Payment {
             card_number = stdin.nextLine();
 
         }
+        System.out.println("Please enter a expiry date in format MMYY: ");
+        String expiry_date = stdin.nextLine();
+
+
+        while(!validMonth(expiry_date.substring(0,2)) || !validYear(expiry_date.substring(2))){
+            if(!validMonth(expiry_date.substring(0,2)) && !validYear(expiry_date.substring(2))) {
+                System.err.println("Please enter a valid expiry date in format MMYY: ");
+            } else if(!validMonth(expiry_date.substring(0,2))) {
+                System.err.println("Please enter a valid month");
+            }  else if(!validYear(expiry_date.substring(2))) {
+                System.err.println("Please enter a valid year");
+            }
+            expiry_date = stdin.nextLine();
+
+
+        }
+
+        System.out.println("Please enter a CVC number: ");
+        String cvc = stdin.nextLine();
+
+        while(!isNumeric(cvc) || (cvc.length()!= 3 && cvc.length()!= 4)){
+            System.err.println("Invalid CVC number");
+            cvc = stdin.nextLine();
+
+        }
+
 
 
 
     }
+
+
 
 
 
