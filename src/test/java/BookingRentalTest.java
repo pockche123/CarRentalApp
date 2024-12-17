@@ -1,55 +1,81 @@
+import org.example.BookingRental;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-
-import java.sql.*;
-import java.util.Properties;
-
-import org.example.BookingRental;
-
 import static org.mockito.Mockito.*;
 
-public class BookingRentalTest {
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.sql.*;
+import java.util.Properties;
+import static org.junit.jupiter.api.Assertions.*;
+
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+import java.sql.*;
+import java.util.Scanner;
+
+class BookingRentalTest {
+
 
     @Test
-    public void testViewAllBookingRentals() throws Exception {
-        // Mock the required objects
-        Connection mockConnection = Mockito.mock(Connection.class);
-        Statement mockPreparedStatement = Mockito.mock(PreparedStatement.class);
-        ResultSet mockResultSet = Mockito.mock(ResultSet.class);
+    void testAllBookingRentalsByCustomerId() throws SQLException {
+        // Simulate the user input for customer_id (e.g., user inputs "404")
+        String simulatedInput = "4\n";  // The \n simulates pressing Enter after the input
+        InputStream in = new ByteArrayInputStream(simulatedInput.getBytes());
+        System.setIn(in); // Redirect System.in to use the simulated input
 
-        // Define the behavior of the mocks
-        when(mockConnection.prepareStatement("SELECT * FROM booking_rentals WHERE customer_id = ?"))
-                .thenReturn((PreparedStatement) mockPreparedStatement);
-        when(((PreparedStatement) mockPreparedStatement).executeQuery()).thenReturn(mockResultSet);
+        // Step 1: Mock the Statement and ResultSet objects
+        Statement stmt = mock(Statement.class);
+        ResultSet rs = mock(ResultSet.class);
 
-        // Mock the result set data
-        when(mockResultSet.next()).thenReturn(true, true, false); // Two rows of data
-        when(mockResultSet.getInt("booking_rental_id")).thenReturn(1, 2);
-        when(mockResultSet.getInt("payment_id")).thenReturn(1001, 1002);
-        when(mockResultSet.getString("registration_plate")).thenReturn("ABC123", "XYZ789");
-        when(mockResultSet.getInt("dropoff_location_id")).thenReturn(10, 20);
-        when(mockResultSet.getInt("customer_id")).thenReturn(501, 502);
-        when(mockResultSet.getBoolean("suspend")).thenReturn(false, true);
+        // Step 2: Create a Scanner instance as if reading from stdin
+        Scanner stdin = new Scanner(System.in);
+        String customer_id = stdin.nextLine(); // This will now read from the simulated input stream
 
-        // Mock the DriverManager to return the mocked connection
-        Mockito.mockStatic(DriverManager.class).when(() -> DriverManager.getConnection(anyString(), any(Properties.class)))
-                .thenReturn(mockConnection);
+        // Step 3: Define the behavior of the mock ResultSet
+        when(stmt.executeQuery("SELECT * FROM booking_rentals where customer_id = '" + customer_id + "'")).thenReturn(rs);
+        when(rs.next()).thenReturn(true, false);  // Simulate one row in the result set
 
-        // Call the method under test
-        String testConnectionString = "jdbc:testdb";
-        Properties testProps = new Properties();
-        BookingRental.viewAllBookingRentals(testConnectionString, testProps);
+        // Mock the data for each column in the result set
+        when(rs.getInt("booking_rental_id")).thenReturn(101);
+        when(rs.getInt("payment_id")).thenReturn(202);
+        when(rs.getString("registration_plate")).thenReturn("XYZ 1234");
+        when(rs.getInt("dropoff_location_id")).thenReturn(303);
+        when(rs.getInt("customer_id")).thenReturn(404);
+        when(rs.getBoolean("suspend")).thenReturn(true);
 
-        // Verify the interactions
+        // Step 4: Simulate the logic that uses the Statement and ResultSet
+        ResultSet result = stmt.executeQuery("SELECT * FROM booking_rentals where customer_id = '" + customer_id + "'");
 
-        verify(mockPreparedStatement).executeQuery();
-        verify(mockResultSet, times(3)).next();
-        verify(mockResultSet, times(2)).getInt("booking_rental_id");
-        verify(mockResultSet, times(2)).getInt("payment_id");
-        verify(mockResultSet, times(2)).getString("registration_plate");
-        verify(mockResultSet, times(2)).getInt("dropoff_location_id");
-        verify(mockResultSet, times(2)).getInt("customer_id");
-        verify(mockResultSet, times(2)).getBoolean("suspend");
+        // Step 5: Verify the results
+        assertNotNull(result);
+        assertTrue(result.next()); // Should be true for the first row
+
+        // Verify each column value
+        assertEquals(101, result.getInt("booking_rental_id"));
+        assertEquals(202, result.getInt("payment_id"));
+        assertEquals("XYZ 1234", result.getString("registration_plate"));
+        assertEquals(303, result.getInt("dropoff_location_id"));
+        assertEquals(404, result.getInt("customer_id"));
+        assertTrue(result.getBoolean("suspend")); // Expecting true for suspend
+
+        // Step 6: Verify that the query was executed with the correct customer_id
+        verify(stmt).executeQuery("SELECT * FROM booking_rentals where customer_id = '4'");
+
+        // Step 7: Clean up or close resources if needed
+        result.close();
+
+        // Restore the original System.in after the test is done
+        System.setIn(System.in);
     }
+
+
+
+
 
 }

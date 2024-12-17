@@ -9,14 +9,13 @@ public class BookingRental{
     public static Scanner stdin = new Scanner(System.in);
     public static void viewAllBookingRentals(String connectionString, Properties props) {
 
-        String customer_id = "3";
-
+        System.out.println("Please enter the booking ID:");
         try {
             Connection conn = DriverManager.getConnection(connectionString, props);
             Statement stmt = conn.createStatement();
-
+            String customer_id = stdin.nextLine();
             // Query to select all data from the booking_rentals table
-            ResultSet rs = stmt.executeQuery("SELECT * FROM booking_rentals where customer_id = ' " + customer_id + "'");
+            ResultSet rs = stmt.executeQuery("SELECT * FROM booking_rentals where customer_id = '" + customer_id + "'");
 
             // Print a header for the output
             System.out.println("Booking Rental ID | \tPayment ID |\tRegistration Plate |\tDropoff Location ID | \tCustomer ID | \tSuspend");
