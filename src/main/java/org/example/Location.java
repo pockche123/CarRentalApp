@@ -48,6 +48,35 @@ public class Location {
     }
 
 
+
+    public static void viewAllLocations(){
+        Connection conn = Main.establishConnection();
+
+        try{
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM locations");
+            ResultSet rs = pstmt.executeQuery();
+
+            // Print a header for the output
+//            System.out.println("Country|\tCity |\t\tAddress");
+
+            while(rs.next()){
+
+                String country = rs.getString("country");
+                String city = rs.getString("city");
+                String address = rs.getString("address");
+
+
+                System.out.printf("\t\t%s\t\t\t%s\t\t\t%s\n",
+                        country, city, address);
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+
+
     public static void viewAllAvailableCarsForALocation(){
         Connection conn = Main.establishConnection();
 
