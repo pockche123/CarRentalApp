@@ -18,6 +18,11 @@ public class Main {
 
         Payment payment = new Payment();
 
+
+
+        BookingRental.createBookingRental(7,"AG23CUY", 1, 1);
+
+
         Payment.paymentValidation(payment);
         int payment_id = Payment.createPayment(payment);
 //        BookingRental.viewAllBookingRentals(establishConnection(), customer.getCustomer_id());

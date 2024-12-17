@@ -17,10 +17,6 @@ public class BookingRental{
     public static void viewAllBookingRentals(Connection conn, int customer_id) {
 
         System.out.println("Please enter the booking ID:");
-
-
-
-
         try {
             Statement stmt = conn.createStatement();
 //            String customer_id = stdin.nextLine();
@@ -51,14 +47,22 @@ public class BookingRental{
         }
     }
 
-//
-//    public static void createBookingRental(Connection conn, Customer customer) {
-//        booking_rental_id SERIAL PRIMARY KEY,
-//        payment_id INT,
-//        registration_plate VARCHAR(7),
-//                dropoff_location_id INT,
-//                customer_id INT,
-//                suspend BOOLEAN DEFAULT false,
-//
-//    }
+
+    public static void createBookingRental(int payment_id, String registration_plate, int dropoff_location_id, int customer_id) {
+        String insertQuery = "INSERT INTO booking_rentals (payment_id, registration_plate, dropoff_location_id, customer_id, suspend) VALUES (?, ?, ?, ?, ?)";
+        try(Connection conn = Main.establishConnection()){
+            PreparedStatement stmt = conn.prepareStatement(insertQuery);
+            stmt.setInt(1, payment_id);
+            stmt.setString(2, registration_plate);
+            stmt.setInt(3, dropoff_location_id);
+            stmt.setInt(4, customer_id);
+            stmt.setBoolean(5,false);
+            stmt.execute();
+
+
+        } catch(SQLException e){
+            throw new RuntimeException(e);
+
+        }
+    }
 }
