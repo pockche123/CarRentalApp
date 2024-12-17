@@ -13,7 +13,7 @@ CREATE TABLE customers (
                            first_name VARCHAR(255),
                            last_name VARCHAR(255),
                            address VARCHAR(255),
-                           username VARCHAR(30) NOT NULL,
+                           username VARCHAR(30) NOT NULL UNIQUE,
                            password VARCHAR(30) NOT NULL
 );
 
@@ -130,7 +130,7 @@ INSERT INTO booking_services (service_type, registration_plate, service_status) 
 -- Create admins table
 CREATE TABLE admins (
                         admin_id SERIAL PRIMARY KEY,
-                        username VARCHAR(30) NOT NULL
+                        username VARCHAR(30) NOT NULL UNIQUE
 );
 
 -- Insert data into admins table
