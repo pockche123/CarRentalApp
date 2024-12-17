@@ -1,0 +1,1 @@
+sdk use java 21.0.5-amzn
