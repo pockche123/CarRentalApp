@@ -7,12 +7,11 @@ import java.util.Scanner;
 public class BookingRental{
 
     public static Scanner stdin = new Scanner(System.in);
-    public static void viewAllBookingRentals(String connectionString, Properties props) {
+    public static void viewAllBookingRentals(Connection conn) {
 
         String customer_id = "3";
 
         try {
-            Connection conn = DriverManager.getConnection(connectionString, props);
             Statement stmt = conn.createStatement();
 
             // Query to select all data from the booking_rentals table

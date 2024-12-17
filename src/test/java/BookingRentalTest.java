@@ -1,3 +1,4 @@
+import org.example.Main;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -38,7 +39,7 @@ public class BookingRentalTest {
         // Call the method under test
         String testConnectionString = "jdbc:testdb";
         Properties testProps = new Properties();
-        BookingRental.viewAllBookingRentals(testConnectionString, testProps);
+        BookingRental.viewAllBookingRentals(Main.establishConnection());
 
         // Verify the interactions
 
