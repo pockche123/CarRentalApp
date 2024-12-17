@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 class BookingRentalTest {
 
-
     @Test
     void testAllBookingRentalsByCustomerId() throws SQLException {
         // Simulate the user input for customer_id (e.g., user inputs "404")
