@@ -16,4 +16,17 @@ public class PaymentTests {
      assertEquals(false, Payment.isNumeric("1asdv"));
  }
 
+ @Test
+    void test_idValidMonthTrue(){
+     assertEquals(true, Payment.validMonth("12"));
+     assertEquals(true, Payment.validMonth("1"));
+
+ }
+
+ @Test
+    void test_idValidMonthFalse(){
+     assertEquals(false, Payment.validMonth("134"));
+     assertEquals(false, Payment.validMonth("1fadsf"));
+ }
+
 }
