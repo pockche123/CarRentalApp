@@ -9,17 +9,21 @@ public class BookingRental{
 
     private int booking_rental_id;
 
+
     public BookingRental(){};
     public BookingRental(int booking_rental_id){};
 
     public static Scanner stdin = new Scanner(System.in);
-    public static void viewAllBookingRentals(String connectionString, Properties props) {
+    public static void viewAllBookingRentals(Connection conn, int customer_id) {
 
         System.out.println("Please enter the booking ID:");
+
+
+
+
         try {
-            Connection conn = DriverManager.getConnection(connectionString, props);
             Statement stmt = conn.createStatement();
-            String customer_id = stdin.nextLine();
+//            String customer_id = stdin.nextLine();
             // Query to select all data from the booking_rentals table
             ResultSet rs = stmt.executeQuery("SELECT * FROM booking_rentals where customer_id = '" + customer_id + "'");
 
@@ -47,8 +51,14 @@ public class BookingRental{
         }
     }
 
-
-    public static void createBookingRental(String connectionString, Properties props) {
-
-    }
+//
+//    public static void createBookingRental(Connection conn, Customer customer) {
+//        booking_rental_id SERIAL PRIMARY KEY,
+//        payment_id INT,
+//        registration_plate VARCHAR(7),
+//                dropoff_location_id INT,
+//                customer_id INT,
+//                suspend BOOLEAN DEFAULT false,
+//
+//    }
 }
