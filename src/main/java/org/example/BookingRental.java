@@ -14,12 +14,12 @@ public class BookingRental{
     public BookingRental(int booking_rental_id){};
 
     public static Scanner stdin = new Scanner(System.in);
-    public static void viewAllBookingRentals(Connection conn, int customer_id) {
+    public void viewAllBookingRentals(Connection conn, int customer_id) {
 
         System.out.println("Please enter the booking ID:");
         try {
             Statement stmt = conn.createStatement();
-//            String customer_id = stdin.nextLine();
+
             // Query to select all data from the booking_rentals table
             ResultSet rs = stmt.executeQuery("SELECT * FROM booking_rentals where customer_id = '" + customer_id + "'");
 
@@ -48,7 +48,7 @@ public class BookingRental{
     }
 
 
-    public static void createBookingRental(int payment_id, String registration_plate, int dropoff_location_id, int customer_id) {
+    public  void createBookingRental(int payment_id, String registration_plate, int dropoff_location_id, int customer_id) {
         String insertQuery = "INSERT INTO booking_rentals (payment_id, registration_plate, dropoff_location_id, customer_id, suspend) VALUES (?, ?, ?, ?, ?)";
         try(Connection conn = Main.establishConnection()){
             PreparedStatement stmt = conn.prepareStatement(insertQuery);

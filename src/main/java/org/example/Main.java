@@ -18,9 +18,9 @@ public class Main {
 
         Payment payment = new Payment();
 
+        BookingRental bookingRental = new BookingRental();
 
-
-        BookingRental.createBookingRental(7,"AG23CUY", 1, 1);
+       bookingRental.createBookingRental(7,"AG23CUY", 1, 1);
 
 
         Payment.paymentValidation(payment);
