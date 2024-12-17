@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Properties;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Location {
@@ -77,13 +77,10 @@ public class Location {
 
 
 
-    public static void viewAllAvailableCarsForALocation(){
+    public static void viewAllAvailableCarsForALocation(int locationId){
         Connection conn = Main.establishConnection();
 
         try{
-            System.out.printf("Enter the id of the location you want to view all its available cars: \n");
-            int locationId = stdin.nextInt();
-
 
             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM cars WHERE pickup_location_id = ? AND car_status = ?");
             pstmt.setInt(1, locationId);
@@ -109,5 +106,78 @@ public class Location {
         }catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    //This method will display all the available locations, then ask the user to pick one of them and then return what ever location is picked
+    public static int selectLocation(){
+        Connection conn = Main.establishConnection();
+        int locationId = 0;
+
+        try{
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM locations");
+            ResultSet rs = pstmt.executeQuery();
+
+            //create an array list to store all the current location IDs returned
+            ArrayList<Integer> locationIdList = new ArrayList<>();
+
+            System.out.println("Pick a location from the list by selecting the location id");
+            while(rs.next()){
+
+                int location_id = rs.getInt("location_id");
+                String country = rs.getString("country");
+                String city = rs.getString("city");
+                String address = rs.getString("address");
+
+                System.out.printf("\t\t%d\t\t\t%s\t\t\t%s\t\t\t%s\n",
+                        location_id, country, city, address);
+
+                //store all the location id returned so that it can be checked against the id selected by the user.
+                locationIdList.add(rs.getInt("location_id"));
+            }
+
+            //first check that the user enters a valid number for the id
+            locationId = validateNumber(stdin.nextLine());
+
+            boolean isFound = false;
+            while(!isFound){
+                for(int i = 0; i < locationIdList.size(); i++){
+                    if(locationIdList.get(i) == locationId){
+                        isFound = true;
+                        break;
+                    }
+                }
+                if(!isFound){
+                    System.out.println("The location id selected is not part of the list! try again");
+                    locationId = validateNumber(stdin.nextLine());
+                }
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return locationId;
+    }
+
+
+
+    public static int validateNumber(String input){
+        boolean isValid = false;
+        int number = 0;
+
+        while(!isValid) {
+
+            try {
+                number = Integer.parseInt(input);
+                isValid = true;
+
+            } catch (NumberFormatException e) {
+
+                System.out.println("invalid number entered! Try again");
+                input = stdin.nextLine();
+
+            }
+        }
+        return number;
     }
 }

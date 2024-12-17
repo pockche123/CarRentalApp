@@ -14,11 +14,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        BookingRental.viewAllBookingRentals(establishConnection());
+//        BookingRental.viewAllBookingRentals(establishConnection());
 
-        Location.viewAllLocations();
+        Location.viewAllAvailableCarsForALocation(Location.selectLocation());
 
-        Location.viewAllAvailableCarsForALocation();
 
 
     }
