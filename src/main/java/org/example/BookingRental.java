@@ -46,4 +46,9 @@ public class BookingRental{
             throw new RuntimeException(e);
         }
     }
+
+
+    public static void createBookingRental(String connectionString, Properties props) {
+
+    }
 }
