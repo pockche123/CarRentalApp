@@ -24,7 +24,6 @@ public class Customer
     }
 
 
-
     public static int login() {
         try (Connection conn = Main.establishConnection()){
             System.out.println("Please enter your Login:");
@@ -43,7 +42,9 @@ public class Customer
 
 
         } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return -1;
     }
 
  

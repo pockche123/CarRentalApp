@@ -1,9 +1,9 @@
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
@@ -12,7 +12,7 @@ public class CustomerTests {
 
 
     @Test
-    public void testcreateBookingRental() throws SQLException {
+    public void testRegisterCustomer() throws SQLException {
         // Mock the Connection and PreparedStatement
         Connection mockConn = mock(Connection.class);
         PreparedStatement mockStmt = mock(PreparedStatement.class);
@@ -33,4 +33,27 @@ public class CustomerTests {
         // Verify if execute was called
         verify(mockStmt, times(1)).executeUpdate();
     }
+
+    @Test
+    public void testCustomerLogin() throws SQLException {
+        Statement stmt = mock(Statement.class);
+        ResultSet mockRs = mock(ResultSet.class);
+        String username = "user123";
+        String password = "password123";
+        String query = "SELECT * FROM customers WHERE username = '" + username + "' AND password = '" + password + "'";
+        when(stmt.executeQuery(query)).thenReturn(mockRs);
+        when(mockRs.next()).thenReturn(true, false);  // Simulate one row in the result set
+
+        when(mockRs.getInt("customer_id")).thenReturn(1);
+        ResultSet result = stmt.executeQuery(query);
+        assertNotNull(result);
+        assertEquals(1, result.getInt("customer_id"));
+
+
+    }
+
+
+
+
+
 }

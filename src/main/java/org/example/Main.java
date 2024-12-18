@@ -5,12 +5,10 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.Properties;
 import java.util.Scanner;
 
-public class Main
-{
+public class Main {
 
     public static void main (String[] args)
     {
@@ -33,7 +31,7 @@ public class Main
                     callAdmin();
                     break;
                     default:
-                        System.out.println("Invalid choice");
+                        System.err.println("Invalid choice");
         }
     }
 
@@ -41,38 +39,34 @@ public class Main
 
     private static void callCustomer() {
 
-        System.out.println("Hi I am in customer page");
+        System.out.println("Customer Page ");
     }
     private static void callAdmin() {
-        System.out.println("Hi I am admin page");
+        System.out.println("Admin Page ");
     }
 
 
 
-        public static Connection establishConnection () {
-            String connectionString = "jdbc:postgresql://localhost:5432/CarRental";
-            Properties props = new Properties();
+    public static Connection establishConnection() {
+        String connectionString = "jdbc:postgresql://localhost:5432/CarRental";
+        Properties props = new Properties();
 
-            try {
-                InputStream input = Main.class.getClassLoader().getResourceAsStream("db.properties");
-                props.load(input);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-            try {
-                Connection conn = DriverManager.getConnection(connectionString, props);
-                return conn;
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            return null;
+        try {
+            InputStream input = Main.class.getClassLoader().getResourceAsStream("db.properties");
+            props.load(input);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
 
+        try {
+            Connection conn = DriverManager.getConnection(connectionString, props);
+            return conn;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
-
-
+}
