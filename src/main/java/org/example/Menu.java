@@ -86,7 +86,9 @@ public class Menu {
         }
     }
 
-    private static void goToAdminLogin() {
+    public static void goToAdminLogin() {
+        System.out.println("Admin Login: ");
+        Admin.login();
 
     }
 
