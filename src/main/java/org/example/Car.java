@@ -37,6 +37,45 @@ public class Car {
     }
 
 
+
+    public static ArrayList viewAllAvailableCars(){
+        Connection conn = Main.establishConnection();
+
+        // This will be used to store the registration of all the available cars
+        ArrayList<String> carRegistrationList = new ArrayList<>();
+
+        try{
+
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM cars WHERE car_status = ?");
+            pstmt.setString(1, "available");
+            ResultSet rs = pstmt.executeQuery();
+
+            // Print a header for the output
+            System.out.println("Registration Plate |\tCar Type |\t\tMake |\t\t\tModel");
+
+
+            while(rs.next()){
+
+                String registration = rs.getString("registration_plate");
+                String carType = rs.getString("car_type");
+                String make = rs.getString("make");
+                String model = rs.getString("model");
+
+                carRegistrationList.add(registration);
+
+                System.out.printf("\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\n",
+                        registration, carType, make, model);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return carRegistrationList;
+    }
+
+
+
+
     public static ArrayList viewAllAvailableCarsForALocation(int locationId){
         Connection conn = Main.establishConnection();
 
@@ -72,6 +111,68 @@ public class Car {
 
         return carRegistrationList;
     }
+
+
+
+    public static void viewCarsByType(){
+        Connection conn = Main.establishConnection();
+
+        // This will be used to store the registration of all the cars
+        ArrayList<String> carTypeList = new ArrayList<>();
+
+        try{
+            PreparedStatement pstmt = conn.prepareStatement("SELECT DISTINCT car_type FROM cars");
+            ResultSet rs = pstmt.executeQuery();
+
+            // Print a header for the output
+            System.out.println("\t|Car types|\t");
+            while(rs.next()){
+                String carType = rs.getString("car_type");
+
+                carTypeList.add(carType);
+
+                System.out.printf("\t%s\n", carType);
+            }
+
+            // take in the type input from the user
+            System.out.println("Enter the car type that you will like to see, from the list above >");
+            String carTypeInput = stdin.nextLine();
+
+            // check that the type entered is a valid one in the database
+            boolean isFound = false;
+            while(!isFound){
+                for(int i = 0; i < carTypeList.size(); i++){
+                    if(carTypeList.get(i).toLowerCase().equals(carTypeInput.toLowerCase())){
+                        isFound = true;
+                        break;
+                    }
+                }
+                if(!isFound){
+                    System.err.println("The type entered is not on the list! Try again");
+                    carTypeInput = stdin.nextLine();
+                }
+            }
+
+            pstmt = conn.prepareStatement("SELECT * FROM cars WHERE LOWER(car_type) = ?");
+            pstmt.setString(1, carTypeInput.toLowerCase().trim());
+            ResultSet resultSet = pstmt.executeQuery();
+
+            while(resultSet.next()){
+                String registration = resultSet.getString("registration_plate");
+                String carType = resultSet.getString("car_type");
+                String make = resultSet.getString("make");
+                String model = resultSet.getString("model");
+
+                System.out.printf("\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\n",
+                        registration, carType, make, model);
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+
 
 
     public static String selectCar(ArrayList<String> carRegistrationList){
