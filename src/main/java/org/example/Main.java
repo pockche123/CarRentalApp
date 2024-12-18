@@ -14,7 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-
+        BookingService.createBookingService("minor-repair","AG23CUY", "in-progress");
     }
 
     public static Connection establishConnection() {
