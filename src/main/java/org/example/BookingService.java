@@ -41,12 +41,13 @@ public class BookingService {
         Car.viewAllAvailableCars();
 
         System.out.println("Please enter the registration plate number from above to book for service: ");
-        String reg_plate = stdin.nextLine();
+        String reg_plate = stdin.nextLine().toUpperCase();
         while(!checkForValidCar(reg_plate)){
             System.err.println("Please enter a valid plate number from above to book for service: ");
             reg_plate = stdin.nextLine();
         }
-        if(createBookingService(service_type, reg_plate, "In Progress")){
+        if(createBookingService(service_type, reg_plate.toUpperCase(), "In Progress")){
+            Car.changeCarStatus(reg_plate, "In Service");
             System.out.println("Service Booking Created");
         } else{
             System.out.println("Service Booking Failed");
