@@ -34,9 +34,10 @@ public class Menu {
         System.out.println("1. Login");
         System.out.println("2. Register");
         System.out.println("3. Go Back");
+        System.out.println("4. Exit");
 
         String choice = stdin.nextLine().trim();
-        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3")){
+        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3")&& !choice.equals("4")){
             System.err.println("Invalid choice. Please pick an option from the menu");
             choice = stdin.nextLine().trim();
         }
@@ -47,6 +48,8 @@ public class Menu {
             goToCustomerRegister();
         } else if(choice.equals("3")){
             startApp();
+        } else if(choice.equals("4")){
+            System.exit(0);
         }
 
 
@@ -64,7 +67,7 @@ public class Menu {
         System.out.println("Please select one of the following options:");
         System.out.println("1. Login");
         System.out.println("2. Go Back");
-
+        System.out.println("3. Exit");
         String choice = stdin.nextLine().trim();
         while(!choice.equals("1")  && !choice.equals("2")){
             System.err.println("Invalid choice. Please pick an option from the menu");
@@ -73,8 +76,10 @@ public class Menu {
 
         if (choice.equals("1")){
             goToAdminLogin();
-        } else if(choice.equals("3")){
+        } else if(choice.equals("2")){
             startApp();
+        } else if(choice.equals("3")){
+            System.exit(0);
         }
     }
 
@@ -84,11 +89,13 @@ public class Menu {
         System.out.println("1. View all Bookings");
         System.out.println("2. Add a Car");
         System.out.println("3. Suspend a Car");
-        System.out.println("4. Book a Car for Servicing");
-        System.out.println("5. Go Back");
+        System.out.println("4. Suspend a Car");
+        System.out.println("5. Book a Car for Servicing");
+        System.out.println("6. Go Back");
+        System.out.println("7. Exit");
         
         String choice = stdin.nextLine().trim();
-        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3")&& !choice.equals ("4")&& !choice.equals("5"))
+        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3")&& !choice.equals ("4")&& !choice.equals("5")&& !choice.equals("6")&& !choice.equals("7"))
         {
             System.err.println("Invalid choice. Please pick an option from the menu");
             choice = stdin.nextLine().trim();
@@ -100,12 +107,19 @@ public class Menu {
             goToAddCar();
         }else if(choice.equals("3")){
             goToSuspendACar();
-        }else if(choice.equals("4")){
+        }else if(choice.equals("3")){
+            goToUnsuspendACar();
+        }else if(choice.equals("5")){
             goToBookACarForServiceing();
-        } else if(choice.equals("5")){
+        } else if(choice.equals("6")){
             startApp();
+        } else if(choice.equals("7")){
+            System.exit(0);
         }
         
+    }
+
+    private static void goToUnsuspendACar() {
     }
 
     private static void goToBookACarForServiceing() {
@@ -132,17 +146,20 @@ public class Menu {
         System.out.println("Please choose one of the following options:");
         System.out.println("1. Create a rental booking");
         System.out.println("2. Create a view a rental booking");
+        System.out.println("3. Exit");
 
-        String choiceViewing = stdin.nextLine().trim();
-        while(!choiceViewing.equals("1") && !choiceViewing.equals("2") && !choiceViewing.equals("3")){
+        String choice = stdin.nextLine().trim();
+        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3")){
             System.err.println("Invalid choice. Please pick an option from the menu");
-            choiceViewing = stdin.nextLine().trim();
+            choice = stdin.nextLine().trim();
         }
 
-        if (choiceViewing.equals("1")){
+        if (choice.equals("1")){
             goToCreatRental();
-        }else if(choiceViewing.equals("2")){
+        }else if(choice.equals("2")){
             goToViewRentalBooking();
+        } else if(choice.equals("3")){
+            System.exit(0);
         }
     }
 
