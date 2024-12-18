@@ -12,33 +12,15 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main (String[] args)
-    {
-    Scanner stdin =new Scanner(System.in);
+    public static void main (String[] args) {
 
-    while(true)
-    {
-        System.out.println("Please choose one of the following options:");
-        System.out.println("1. Customer");
-        System.out.println("2. Admin");
-        System.out.println("3. Exit");
 
-        String choice = stdin.nextLine();
-
-        switch(choice)
-        {
-            case "1":
-
-                break;
-                case "2":
-
-                    break;
-                    default:
-                        System.err.println("Invalid choice");
+        while (true) {
+            Menu.startApp();
         }
     }
 
-    }
+
 
 
 
