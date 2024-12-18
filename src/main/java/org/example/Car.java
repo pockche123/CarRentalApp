@@ -12,6 +12,31 @@ public class Car {
     static Scanner stdin = new Scanner(System.in);
 
 
+    public static void viewAllCars(){
+        Connection conn = Main.establishConnection();
+
+        try{
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM cars");
+            ResultSet rs = pstmt.executeQuery();
+
+            while(rs.next()){
+
+                String registration = rs.getString("registration_plate");
+                String carType = rs.getString("car_type");
+                String make = rs.getString("make");
+                String model = rs.getString("model");
+
+
+                System.out.printf("\t\t%s\t\t%s\t\t%s\t\t%s\n",
+                        registration, carType, make, model);
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+
     public static ArrayList viewAllAvailableCarsForALocation(int locationId){
         Connection conn = Main.establishConnection();
 

@@ -20,7 +20,8 @@ public class Main {
 //        ArrayList<String> carRegistrationList = Car.viewAllAvailableCarsForALocation(Location.selectPickUpLocation());
 //        Car.selectCarForRental(carRegistrationList);
 
-        Car.createCar();
+        //Car.createCar();
+        Car.viewAllCars();
     }
 
     public static Connection establishConnection() {
