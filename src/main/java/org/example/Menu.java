@@ -28,7 +28,11 @@ public class Menu {
             case "3":
                 System.exit(0);
             default:
-                System.err.println("Invalid choice");
+                System.err.println("Invalid choice. Try again.");
+                startApp();
+
+
+
         }
     }
     public static void callCustomer(){
@@ -130,20 +134,7 @@ public class Menu {
         
     }
 
-    private static void goToUnsuspendACar() {
-    }
 
-    private static void goToBookACarForServiceing() {
-    }
-
-    private static void goToSuspendACar() {
-    }
-
-    private static void goToAddCar() {
-    }
-
-    private static void goToViewAllBooking() {
-    }
 
     public static void goToCustomerLogin(){
         System.out.println("Customer Login :");
@@ -253,13 +244,7 @@ public class Menu {
         }
 
 
-
-
-
     }
-
-
-
 
 }
 
