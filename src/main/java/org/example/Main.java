@@ -14,21 +14,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Customer customer = new Customer();
-
-        Payment payment = new Payment();
-
-        BookingRental bookingRental = new BookingRental();
-
-       bookingRental.createBookingRental(7,"AG23CUY", 1, 1);
-
-
-        Payment.paymentValidation(payment);
-        int payment_id = Payment.createPayment(payment);
-//        BookingRental.viewAllBookingRentals(establishConnection(), customer.getCustomer_id());
-        System.out.println("this is the payment id: "+ payment_id);
-
-        Location.createLocation();
     }
 
     public static Connection establishConnection() {
