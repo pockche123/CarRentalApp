@@ -13,8 +13,9 @@ public class Main {
     public static Scanner stdin = new Scanner(System.in);
 
     public static void main(String[] args) {
+        BookingRental.viewAllBookingRentals();
 
-
+        System.out.println(BookingRental.checkForValidBookingRental(8));
     }
 
     public static Connection establishConnection() {
