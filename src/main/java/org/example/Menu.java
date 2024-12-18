@@ -190,13 +190,41 @@ public class Menu {
     }
 
     public static void viewAllCarsMenu(){
-        System.out.println("View All Cars Menu");
+        System.out.println("View all cars menu");
         Car.viewAllCars();
-        System.out.println("Press 1 to filter the car by type: ");
+        System.out.println("Press '1' to filter the car by type or ");
+        System.out.println("Press 'x' to go back to admin menu");
+        System.out.println();
+
         String input = stdin.nextLine().trim();
+        while (!input.equals("1") && !input.equals("x")){
+            System.err.println("Invalid choice. Please pick a valid option from the menu");
+            input = stdin.nextLine().trim();
+        }
         if(input.equals("1")){
             Car.viewCarsByType();
+            System.out.println("Press '1' to VIEW ALL CARS ");
+            System.out.println("Press 'x' to go back to ADMIN MENU");
+
+            String input2 = stdin.nextLine().trim();
+            while (!input.equals("1") && !input.equals("x")){
+                System.err.println("Invalid choice. Please pick a valid option from the menu");
+                input = stdin.nextLine().trim();
+            }
+            if(input2.equals("1")){
+                viewAllCarsMenu();
+            }
+            if(input2.equalsIgnoreCase("x")){
+                goToAdminLogin();
+            }
+
+
+
         }
+        if(input.equalsIgnoreCase("x")){
+            goToAdminLogin();
+        }
+
 
 
 

@@ -129,7 +129,7 @@ public class Car {
             ResultSet rs = pstmt.executeQuery();
 
             // Print a header for the output
-            System.out.println("\t|Car types|\t");
+            System.out.println("|CAR TYPES|\t");
             while(rs.next()){
                 String carType = rs.getString("car_type");
 
