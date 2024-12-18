@@ -34,7 +34,7 @@ public class Admin {
             if(username.equalsIgnoreCase("x")){
                 Menu.callAdmin();
             }
-            System.out.println("Please enter your Password:");
+            System.out.println("Please enter your Password (or 'x' to cancel) :");
             String password = stdin.nextLine();
             if(password.equalsIgnoreCase("x")){
                 Menu.callAdmin();

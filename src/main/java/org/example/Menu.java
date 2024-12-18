@@ -61,6 +61,8 @@ public class Menu {
     }
 
     private static void goToCustomerRegister() {
+
+        Customer.validateRegistration();
     }
 
 
@@ -144,21 +146,22 @@ public class Menu {
     }
 
     public static void goToCustomerLogin(){
-        System.out.println("Welcome to Customer Login");
+        System.out.println("Customer Login :");
+        Customer.login();
 
-//        if the login is true
-        gotToCustomerMenu();
+
     }
 
-    public static void gotToCustomerMenu(){
+    public static void gotToCustomerMenu(int customerId){
         System.out.println("Welcome to Customer Menu");
         System.out.println("Please choose one of the following options:");
         System.out.println("1. Create a rental booking");
-        System.out.println("2. Create a view a rental booking");
-        System.out.println("3. Exit");
+        System.out.println("2. View a rental booking");
+        System.out.println("3. Go Back");
+        System.out.println("4. Exit");
 
         String choice = stdin.nextLine().trim();
-        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3")){
+        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3") && !choice.equals("4")){
             System.err.println("Invalid choice. Please pick an option from the menu");
             choice = stdin.nextLine().trim();
         }
@@ -168,6 +171,8 @@ public class Menu {
         }else if(choice.equals("2")){
             goToViewRentalBooking();
         } else if(choice.equals("3")){
+            startApp();
+        } else if(choice.equals("4")){
             System.exit(0);
         }
     }
