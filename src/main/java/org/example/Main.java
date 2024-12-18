@@ -19,6 +19,7 @@ public class Main {
         System.out.println("Please choose one of the following options:");
         System.out.println("1. Customer");
         System.out.println("2. Admin");
+        System.out.println("3. Exit");
 
         String choice = stdin.nextLine();
 
