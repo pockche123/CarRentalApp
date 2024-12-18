@@ -84,6 +84,40 @@ public class BookingRental{
         }
     }
 
+    public static void viewAllActiveBookingRentals() {
+
+        System.out.println("Please enter the booking ID:");
+        try (Connection conn = Main.establishConnection()){
+
+            Statement stmt = conn.createStatement();
+
+            // Query to select all data from the booking_rentals table
+            ResultSet rs = stmt.executeQuery("SELECT * FROM booking_rentals where suspend = false");
+
+            // Print a header for the output
+            System.out.println("Booking Rental ID | \tPayment ID |\tRegistration Plate |\tDropoff Location ID | \tCustomer ID | \tSuspend");
+
+            // Process each row in the result set
+            while (rs.next()) {
+                // Retrieve each column value
+                int bookingRentalId = rs.getInt("booking_rental_id");
+                int paymentId = rs.getInt("payment_id");
+                String registrationPlate = rs.getString("registration_plate");
+                int dropoffLocationId = rs.getInt("dropoff_location_id");
+                int customerId = rs.getInt("customer_id");
+                boolean suspend = rs.getBoolean("suspend");
+
+                // Print the values to the console
+                System.out.printf("\t\t%d\t\t\t\t\t%d\t\t\t\t%s\t\t\t\t\t\t\t%d\t\t\t\t%d\t\t\t%s\n",
+                        bookingRentalId, paymentId, registrationPlate, dropoffLocationId, customerId, suspend);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
 
     public static boolean createBookingRental(int payment_id, String registration_plate, int dropoff_location_id, int customer_id) {
         String insertQuery = "INSERT INTO booking_rentals (payment_id, registration_plate, dropoff_location_id, customer_id, suspend) VALUES (?, ?, ?, ?, ?)";
@@ -119,6 +153,9 @@ public class BookingRental{
         }
     }
 
+
+
+
     public static void changeSuspendStatus(int booking_rental_id, boolean suspend) {
                 try(Connection conn = Main.establishConnection()) {
                     PreparedStatement stmt = conn.prepareStatement("UPDATE booking_rentals  SET suspend  = ? WHERE booking_rental_id = ?");
@@ -129,6 +166,15 @@ public class BookingRental{
                     throw new RuntimeException(e);
         }
 
+    }
+
+
+    public static void suspendMenu(){
+        System.out.println("Suspend Booking Rental Menu:");
+        viewAllActiveBookingRentals();
+        System.out.println("Please enter the Booking Rental ID to suspend: ");
+
+        ;
     }
 
 
