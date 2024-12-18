@@ -113,7 +113,7 @@ public class Menu {
         }else if(choice.equals("2")){
             addCarMenu();
         }else if(choice.equals("3")){
-            goToSuspendACar();
+            BookingRental.suspendMenu();
         }else if(choice.equals("3")){
             goToUnsuspendACar();
         }else if(choice.equals("5")){
