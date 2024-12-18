@@ -15,6 +15,7 @@ public class Main {
     public static Scanner stdin = new Scanner(System.in);
 
     public static void main(String[] args) {
+        Car.createCar();
     }
 
     public static Connection establishConnection() {
