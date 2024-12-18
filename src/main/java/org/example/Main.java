@@ -16,6 +16,8 @@ public class Main {
 
     public static void main (String[] args) {
 
+    public static void main(String[] args) {
+        Car.createCar();
 
         while (true) {
             Menu.startApp();

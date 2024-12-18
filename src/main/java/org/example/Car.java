@@ -298,6 +298,22 @@ public class Car {
 
 
 
+    public static void changeCarStatus(String registration, String status){
+        Connection conn = Main.establishConnection();
+        try{
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE cars SET car_status = ? WHERE registration_plate = ?");
+            pstmt.setString(1, status);
+            pstmt.setString(2, registration);
+            pstmt.execute();
+
+            System.out.println("Car status updated successfully successfully\n");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+
+
     public static int validateNumber(String input){
         boolean isValid = false;
         int number = 0;

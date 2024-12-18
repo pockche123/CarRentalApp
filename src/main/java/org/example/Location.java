@@ -126,6 +126,58 @@ public class Location {
 
 
 
+    public static int selectDropOffLocation(){
+        Connection conn = Main.establishConnection();
+        int locationId = 0;
+
+        try{
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM locations");
+            ResultSet rs = pstmt.executeQuery();
+
+            //create an array list to store all the current location IDs returned
+            ArrayList<Integer> locationIdList = new ArrayList<>();
+
+            System.out.printf("%-15s %15s %15s %15s \n", "ID", "Country","City", "Address");
+            while(rs.next()){
+
+                int location_id = rs.getInt("location_id");
+                String country = rs.getString("country");
+                String city = rs.getString("city");
+                String address = rs.getString("address");
+
+                System.out.printf("%-15s %15s %15s %15s \n", location_id, country, city, address);
+
+                //store all the location id returned so that it can be checked against the id selected by the user.
+                locationIdList.add(rs.getInt("location_id"));
+            }
+            System.out.println("\nPick a drop off location from the list by selecting the location id >");
+
+            //first check that the user enters a valid number for the id
+            locationId = validateNumber(stdin.nextLine());
+
+            boolean isFound = false;
+            while(!isFound){
+                for(int i = 0; i < locationIdList.size(); i++){
+                    if(locationIdList.get(i) == locationId){
+                        isFound = true;
+                        break;
+                    }
+                }
+                if(!isFound){
+                    System.err.println("The location id selected is not part of the list! try again");
+                    locationId = validateNumber(stdin.nextLine());
+                }
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return locationId;
+    }
+
+
+
     public static int validateNumber(String input){
         boolean isValid = false;
         int number = 0;
