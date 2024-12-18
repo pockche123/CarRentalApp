@@ -1,16 +1,12 @@
-import org.example.BookingRental;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 import static org.mockito.Mockito.*;
 
 import java.sql.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-class BookingRentalTests {
+class BookingRentalTest {
 
-    @Mock
-    BookingRental bookingRental = new BookingRental();
 
     @Test
     void testAllBookingRentalsByCustomerId() throws SQLException {

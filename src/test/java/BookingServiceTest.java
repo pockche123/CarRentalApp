@@ -8,7 +8,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
-public class BookingServiceTests {
+public class BookingServiceTest {
     @Test
     public void testcreateBookingService() throws SQLException {
         // Mock the Connection and PreparedStatement
