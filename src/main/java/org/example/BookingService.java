@@ -17,7 +17,7 @@ public class BookingService {
 
 
     public static void bookingServiceMenu(){
-        System.out.println("Booking Service Menu");
+        System.out.println("Service Booking Menu");
         System.out.println("Options");
         System.out.println("1. Minor Service");
         System.out.println("2. Major Service");
@@ -26,7 +26,7 @@ public class BookingService {
 
         String service_option = stdin.nextLine();
         while(!service_option.equals("1")&& !service_option.equals("2")&& !service_option.equals("3")){
-            System.out.println("Please select a valid option no:");
+            System.err.println("Please select a valid option no:");
             service_option = stdin.nextLine();
         };
 
@@ -41,7 +41,21 @@ public class BookingService {
         Car.viewAllAvailableCars();
 
         System.out.println("Please enter the registration plate number from above to book for service: ");
-        String registration_plate_number = stdin.nextLine();
+        String reg_plate = stdin.nextLine();
+        while(!checkForValidCar(reg_plate)){
+            System.err.println("Please enter a valid plate number from above to book for service: ");
+            reg_plate = stdin.nextLine();
+        }
+        if(createBookingService(service_type, reg_plate, "In Progress")){
+            System.out.println("Service Booking Created");
+        } else{
+            System.out.println("Service Booking Failed");
+        }
+
+
+
+
+
 
 
 
@@ -53,7 +67,7 @@ public class BookingService {
 
 
 
-    public static void  createBookingService(String service_type, String registration_plate, String service_status){
+    public static boolean  createBookingService(String service_type, String registration_plate, String service_status){
             String insertQuery = "INSERT INTO booking_services (service_type, registration_plate, service_status) VALUES (?, ?, ?)";
             try(Connection conn = Main.establishConnection()){
                 PreparedStatement stmt = conn.prepareStatement(insertQuery);
@@ -61,7 +75,8 @@ public class BookingService {
                 stmt.setString(2, registration_plate);
                 stmt.setString(3, service_status);
 
-               stmt.executeUpdate();
+
+               return stmt.executeUpdate() > 0;
 
 
             } catch(SQLException e){
