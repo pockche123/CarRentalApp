@@ -10,26 +10,17 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Scanner;
 
-
-
 public class Main {
 
-    public static void main (String[] args) {
+    public static Scanner stdin = new Scanner(System.in);
 
     public static void main(String[] args) {
-        Car.createCar();
+//        System.out.println(BookingService.checkForValidCar("lm19npu"));
+//        System.out.println("lm19npu".toUpperCase());
+        BookingService.bookingServiceMenu();
 
-        while (true) {
-            Menu.startApp();
-        }
 
     }
-
-
-
-
-
-
 
     public static Connection establishConnection() {
         String connectionString = "jdbc:postgresql://localhost:5432/CarRental";

@@ -8,7 +8,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
-public class CustomerTests {
+public class CustomerTest {
 
 
     @Test
