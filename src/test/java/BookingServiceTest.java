@@ -1,9 +1,9 @@
+import org.example.BookingService;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
@@ -29,4 +29,37 @@ public class BookingServiceTest {
         // Verify if execute was called
         verify(mockStmt, times(1)).executeUpdate();
     }
+
+    @Test
+    void testCheckForInvalidCarRegPlate() throws  SQLException {
+
+        assertFalse(BookingService.checkForValidCar("asdf"));
+        assertFalse(BookingService.checkForValidCar("ABC123"));
+    }
+
+
+    @Test
+    void testCheckForValidCarRegPlate() throws SQLException {
+
+        Statement stmt = mock(Statement.class);
+        ResultSet expected = mock(ResultSet.class);
+
+        String reg_plate = "XY231BA";
+        // Step 3: Define the behavior of the mock ResultSet
+        when(stmt.executeQuery("SELECT * FROM cars where registration_plate = " + reg_plate)).thenReturn(expected);
+        when(expected.next()).thenReturn(true, false);  // Simulate one row in the result set
+        when(expected.getString("car_type")).thenReturn("Sedan");
+        when(expected.getString("make")).thenReturn("Toyota");
+        when(expected.getString("model")).thenReturn("Corolla");
+
+
+        ResultSet result = stmt.executeQuery("SELECT * FROM cars where registration_plate = " + reg_plate);
+
+        assertNotNull(result);
+        assertTrue(result.next());
+
+
+
+    }
+
 }

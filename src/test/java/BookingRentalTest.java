@@ -34,6 +34,7 @@ class BookingRentalTest {
         // Step 4: Simulate the logic that uses the Statement and ResultSet
         ResultSet result = stmt.executeQuery("SELECT * FROM booking_rentals where customer_id = '" + customer_id + "'");
 
+
         // Step 5: Verify the results
         assertNotNull(result);
         assertTrue(result.next()); // Should be true for the first row
@@ -211,17 +212,11 @@ class BookingRentalTest {
 
     }
 
-    @Test
-    void testCheckForInvalidCarRegPlate() throws  SQLException {
 
-        assertFalse(BookingService.checkForValidCar("asdf"));
-        assertFalse(BookingService.checkForValidCar("ABC123"));
-    }
 
-    @Test
-    void testCheckForvalidCarRegPlate() {
 
-    }
+
+
 
 
     }
