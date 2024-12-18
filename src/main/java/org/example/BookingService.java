@@ -20,12 +20,14 @@ public class BookingService {
         System.out.println("1. Minor Service");
         System.out.println("2. Major Service");
         System.out.println("3. Repair");
-        System.out.println("Please pick an option from above:");
+        System.out.println("Please select an option no. from above:");
 
         String service_type = stdin.nextLine();
         while(!validOption(service_type.trim(),3)){
             service_type = stdin.nextLine();
         };
+
+
 
 
 
