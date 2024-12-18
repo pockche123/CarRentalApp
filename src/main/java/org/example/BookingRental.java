@@ -1,5 +1,6 @@
 package org.example;
 
+import java.rmi.ServerError;
 import java.sql.*;
 import java.util.Properties;
 import java.util.Scanner;
@@ -141,10 +142,19 @@ public class BookingRental{
     }
 
 
-    public static boolean checkForValidBookingRental(int bookingRental_id) {
+    public static boolean checkForValidBookingRental(String id) {
+
+
+        if(id == null || !Payment.isNumeric(id)){
+            return false;
+        }
+        int bookingRental_id = Integer.parseInt(id);
+
+
+
         try(Connection conn = Main.establishConnection()){
             Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM booking_rentals where booking_rental_id = " + bookingRental_id);
+            ResultSet rs = stmt.executeQuery("SELECT * FROM booking_rentals where suspend = false and  booking_rental_id = " + bookingRental_id);
             return rs.next();
 
 
@@ -156,15 +166,19 @@ public class BookingRental{
 
 
 
-    public static void changeSuspendStatus(int booking_rental_id, boolean suspend) {
+    public static boolean changeSuspendStatus(int booking_rental_id, boolean suspend) {
                 try(Connection conn = Main.establishConnection()) {
                     PreparedStatement stmt = conn.prepareStatement("UPDATE booking_rentals  SET suspend  = ? WHERE booking_rental_id = ?");
                     stmt.setBoolean(1, suspend );
                     stmt.setInt(2, booking_rental_id);
                     stmt.execute();
+                    return true;
                 } catch(SQLException e){
                     throw new RuntimeException(e);
+
         }
+
+
 
     }
 
@@ -173,6 +187,37 @@ public class BookingRental{
         System.out.println("Suspend Booking Rental Menu:");
         viewAllActiveBookingRentals();
         System.out.println("Please enter the Booking Rental ID to suspend: ");
+        String id = stdin.nextLine();
+        while(! checkForValidBookingRental(id)){
+            System.err.println("Rental ID has to be a number within the table: ");
+            id = stdin.nextLine();
+        }
+        System.out.println("Are you sure you want to suspend this booking rental? (Y/N)");
+        String answer = stdin.nextLine();
+        while(!answer.trim().equalsIgnoreCase("y") && !answer.trim().equalsIgnoreCase("n")){
+            System.err.println("Please pick a valid option: ");
+            answer = stdin.nextLine();
+        }
+
+        if(answer.trim().equalsIgnoreCase("y")){
+            if(changeSuspendStatus(Integer.parseInt(id), true)){
+                System.out.println("You have suspended booking rental with id: "+ id);
+            }else{
+                System.err.println("Error suspending booking rental with id: "+ id);
+            };
+        } else{
+            System.exit(0);
+//            take me back to main admin menu
+        }
+
+
+
+
+
+
+
+
+
 
         ;
     }
