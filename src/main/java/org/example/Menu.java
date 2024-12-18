@@ -44,7 +44,7 @@ public class Menu {
         if (choice.equals("1")){
             goToCustomerLogin();
         }else if(choice.equals("2")){
-
+            goToCustomerRegister();
         } else if(choice.equals("3")){
             startApp();
         }
@@ -54,6 +54,8 @@ public class Menu {
 
     }
 
+    private static void goToCustomerRegister() {
+    }
 
 
     public static void callAdmin(){
@@ -73,19 +75,37 @@ public class Menu {
         System.out.println("1. Create a rental booking");
         System.out.println("2. Create a view a rental booking");
 
-        String choice = stdin.nextLine().trim();
-        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3")){
+        String choiceViewing = stdin.nextLine().trim();
+        while(!choiceViewing.equals("1") && !choiceViewing.equals("2") && !choiceViewing.equals("3")){
             System.err.println("Invalid choice. Please pick an option from the menu");
-            choice = stdin.nextLine().trim();
+            choiceViewing = stdin.nextLine().trim();
         }
 
-        if (choice.equals("1")){
-            goToCustomerLogin();
-        }else if(choice.equals("2")){
-            startApp();
+        if (choiceViewing.equals("1")){
+            goToCreatRental();
+        }else if(choiceViewing.equals("2")){
+            goToViewRentalBooking();
         }
+    }
+
+    private static void goToCreatRental() {
+        System.out.println("Please Pick a Location from the following options:");
+
+    }
+
+    private static void goToViewRentalBooking() {
+        System.out.println("Welcome to View  All Rental Booking");
+        String choiceSecond = stdin.nextLine().trim();
+        while(!choiceSecond.equals("1") && !choiceSecond.equals("2")){
+            System.err.println("Invalid choice. Please pick an option from the menu");
+            choiceSecond = stdin.nextLine().trim();
+        }
+
 
 
     }
 
+
+
 }
+
