@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -14,21 +16,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Customer customer = new Customer();
-
-        Payment payment = new Payment();
-
-        BookingRental bookingRental = new BookingRental();
-
-       bookingRental.createBookingRental(7,"AG23CUY", 1, 1);
-
-
-        Payment.paymentValidation(payment);
-        int payment_id = Payment.createPayment(payment);
-//        BookingRental.viewAllBookingRentals(establishConnection(), customer.getCustomer_id());
-        System.out.println("this is the payment id: "+ payment_id);
-
-        Location.createLocation();
+//        Location.createLocation();
+        ArrayList<String> carRegistrationList = Car.viewAllAvailableCarsForALocation(Location.selectPickUpLocation());
+        Car.selectCarForRental(carRegistrationList);
     }
 
     public static Connection establishConnection() {
