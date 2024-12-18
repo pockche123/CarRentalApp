@@ -66,9 +66,6 @@ class BookingRentalTests {
         Statement stmt = mock(Statement.class);
         ResultSet rs = mock(ResultSet.class);
 
-
-
-
         // Step 3: Define the behavior of the mock ResultSet
         when(stmt.executeQuery("SELECT * FROM booking_rentals")).thenReturn(rs);
         when(rs.next()).thenReturn(true, false);  // Simulate one row in the result set
@@ -105,7 +102,7 @@ class BookingRentalTests {
     }
 
     @Test
-    public void testcreateBookingRental() throws SQLException {
+    public void testCreateBookingRental() throws SQLException {
         // Mock the Connection and PreparedStatement
         Connection mockConn = mock(Connection.class);
         PreparedStatement mockStmt = mock(PreparedStatement.class);
@@ -129,7 +126,7 @@ class BookingRentalTests {
 
 
     @Test
-    public void testchangeBookingRentalStatus() throws SQLException {
+    public void testChangeBookingRentalStatus() throws SQLException {
         Connection mockConn = mock(Connection.class);
         PreparedStatement mockStmt = mock(PreparedStatement.class);
 
@@ -141,6 +138,36 @@ class BookingRentalTests {
         stmt.setInt(2, 1);
         stmt.executeUpdate();
         verify(mockStmt, times(1)).executeUpdate();
+
+    }
+
+    @Test
+    public void testCheckForValidBookingRental() throws SQLException {
+        Statement stmt = mock(Statement.class);
+        ResultSet expected = mock(ResultSet.class);
+
+        String booking_rental_id = "1";
+        // Step 3: Define the behavior of the mock ResultSet
+        when(stmt.executeQuery("SELECT * FROM booking_rentals where booking_rental_id = " + booking_rental_id)).thenReturn(expected);
+        when(expected.next()).thenReturn(true, false);  // Simulate one row in the result set
+        when(expected.getInt("booking_rental_id")).thenReturn(1);
+        when(expected.getInt("payment_id")).thenReturn(202);
+        when(expected.getString("registration_plate")).thenReturn("XYZ 1234");
+        when(expected.getInt("dropoff_location_id")).thenReturn(303);
+        when(expected.getInt("customer_id")).thenReturn(404);
+        when(expected.getBoolean("suspend")).thenReturn(true);
+
+
+        ResultSet result = stmt.executeQuery("SELECT * FROM booking_rentals where booking_rental_id = " + booking_rental_id);
+
+        ResultSet falseResult = stmt.executeQuery("SELECT * FROM booking_rentals where booking_rental_id = 2");
+
+//        when booking rental id is found
+        assertNotNull(result);
+        assertTrue(result.next());
+
+//        when no booking rental id found
+        assertNull(falseResult);
 
     }
 
