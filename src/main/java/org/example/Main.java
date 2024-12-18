@@ -10,13 +10,24 @@ import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Scanner;
 
+
+
 public class Main {
 
-    public static Scanner stdin = new Scanner(System.in);
+    public static void main (String[] args) {
 
-    public static void main(String[] args) {
+
+        while (true) {
+            Menu.startApp();
+        }
 
     }
+
+
+
+
+
+
 
     public static Connection establishConnection() {
         String connectionString = "jdbc:postgresql://localhost:5432/CarRental";

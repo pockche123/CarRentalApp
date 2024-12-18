@@ -26,15 +26,13 @@ public class Customer
 
     public static int login() {
         try (Connection conn = Main.establishConnection()){
-            System.out.println("Please enter your Username:");
+            System.out.println("Please enter your Login:");
             String userName = stdin.nextLine();
             System.out.println("Please enter your Password:");
             String password = stdin.nextLine();
-            String query = "SELECT * FROM customers WHERE username = ? AND password = ?";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setString(1, userName.trim());
-            stmt.setString(2, password.trim());
-            ResultSet rs = stmt.executeQuery();
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM customers username = " + userName + " password = " + password);
+            String customer_id = stdin.nextLine();
+            ResultSet rs = stmt.executeQuery("SELECT * FROM customers username = "+userName+" password = "+password);
             if (rs.next()){
                 return rs.getInt("customer_id");
             }else {
