@@ -223,8 +223,11 @@ public class BookingRental{
         public static void unSuspendMenu(){
             System.out.println("UnSuspend Booking Rental Menu:");
             viewAllBookingRentalsBySuspend(true);
-            System.out.println("Please enter the Booking Rental ID to unsuspend: ");
+            System.out.println("Please enter the Booking Rental ID to unsuspend (or 'x' to CANCEL): ");
             String id = stdin.nextLine();
+            if(id.equalsIgnoreCase("x")){
+                Menu.goToAdminMenu();
+            }
             while(! checkForValidBookingRental(id,true)){
                 System.err.println("Rental ID has to be a number within the table: ");
                 id = stdin.nextLine();
@@ -243,7 +246,7 @@ public class BookingRental{
                     System.err.println("Error unsuspending booking rental with id: "+ id);
                 };
             } else{
-                System.exit(0);
+                Menu.goToAdminMenu();
 //            take me back to main admin menu
             };
 

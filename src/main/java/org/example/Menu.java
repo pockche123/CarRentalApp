@@ -96,7 +96,7 @@ public class Menu {
         System.out.println("1. View all Cars");
         System.out.println("2. Add a Car");
         System.out.println("3. Suspend a Car");
-        System.out.println("4. Suspend a Car");
+        System.out.println("4. UnSuspend a Car");
         System.out.println("5. Book a Car for Servicing");
         System.out.println("6. Go Back");
         System.out.println("7. Exit");
@@ -114,10 +114,10 @@ public class Menu {
             addCarMenu();
         }else if(choice.equals("3")){
             BookingRental.suspendMenu();
-        }else if(choice.equals("3")){
-            goToUnsuspendACar();
+        }else if(choice.equals("4")){
+            BookingRental.unSuspendMenu();
         }else if(choice.equals("5")){
-            goToBookACarForServiceing();
+            BookingService.bookingServiceMenu();
         } else if(choice.equals("6")){
             startApp();
         } else if(choice.equals("7")){
@@ -189,15 +189,7 @@ public class Menu {
 
     public static void addCarMenu(){
         System.out.println("Add a Car Menu");
-//        System.out.println("Press 'x' to CANCEL");
-//        String choice = stdin.nextLine().trim();
-//        while (!choice.equalsIgnoreCase("x")){
-//            System.err.println("Invalid choice. Please pick a valid option from the menu");
-//            choice = stdin.nextLine().trim();
-//        }
-//        if(choice.equalsIgnoreCase("x")){
-//            goToAdminLogin();
-//        }
+
         Car.createCar();
         System.out.println("Press '1' to ADD ANOTHER CAR");
         System.out.println("Press 'x' to go back to ADMIN MENU");
@@ -221,9 +213,8 @@ public class Menu {
     public static void viewAllCarsMenu(){
         System.out.println("View all cars menu");
         Car.viewAllCars();
-        System.out.println("Press '1' to filter the car by type or ");
-        System.out.println("Press 'x' to go back to admin menu");
-        System.out.println();
+        System.out.println("Press '1' to filter the car by type (or 'x' to CANCEL");
+
 
         String input = stdin.nextLine().trim();
         while (!input.equals("1") && !input.equals("x")){
