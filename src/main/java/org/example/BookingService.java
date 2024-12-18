@@ -15,36 +15,50 @@ public class BookingService {
 
 
 
-    public void createBookingServiceMenu(){
+    public static void bookingServiceMenu(){
+        System.out.println("Booking Service Menu");
         System.out.println("Options");
         System.out.println("1. Minor Service");
         System.out.println("2. Major Service");
         System.out.println("3. Repair");
         System.out.println("Please select an option no. from above:");
 
-        String service_type = stdin.nextLine();
-        while(!validOption(service_type.trim(),3)){
-            service_type = stdin.nextLine();
+        String service_option = stdin.nextLine();
+        while(!service_option.equals("1")&& !service_option.equals("2")&& !service_option.equals("3")){
+            System.out.println("Please select a valid option no:");
+            service_option = stdin.nextLine();
         };
 
-
-
-
-
-
-
-
-
-
-    }
-
-    public boolean validOption(String option, int no){
-        if(option == null ||!Payment.isNumeric(option)){
-            return false;
+        String service_type;
+        if(service_option.equals("1")){
+            service_type = "Minor Service";
+        } else if(service_option.equals("2")){
+            service_type = "Major Service";
+        } else{
+            service_type = "Repair";
         }
-        return Integer.parseInt(option) <= no && Integer.parseInt(option) >= 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
+
 
 
     public static void  createBookingService(String service_type, String registration_plate, String service_status){
@@ -63,7 +77,6 @@ public class BookingService {
 
             }
     }
-
 
 
 
