@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Scanner;
 
+
+
 public class Main {
 
     public static void main (String[] args)
@@ -26,10 +28,10 @@ public class Main {
         switch(choice)
         {
             case "1":
-                callCustomer();
+
                 break;
                 case "2":
-                    callAdmin();
+
                     break;
                     default:
                         System.err.println("Invalid choice");
@@ -38,13 +40,7 @@ public class Main {
 
     }
 
-    private static void callCustomer() {
 
-        System.out.println("Customer Page ");
-    }
-    private static void callAdmin() {
-        System.out.println("Admin Page ");
-    }
 
 
 
