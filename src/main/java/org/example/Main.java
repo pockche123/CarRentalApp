@@ -16,7 +16,7 @@ public class Main {
 
 //        BookingRental.viewAllBookingRentals(establishConnection());
 
-        Location.viewAllAvailableCarsForALocation(Location.selectLocation());
+        Location.viewAllAvailableCarsForALocation(Location.selectPickUpLocation());
 
 
 

@@ -18,10 +18,6 @@ public class Location {
     static Scanner stdin = new Scanner(System.in);
 
 
-//    public Location(){
-//
-//    }
-
 
     public static void createLocation(){
         Connection conn = Main.establishConnection();
@@ -108,8 +104,8 @@ public class Location {
         }
     }
 
-    //This method will display all the available locations, then ask the user to pick one of them and then return what ever location is picked
-    public static int selectLocation(){
+    //This method will display all the available pick up locations, then ask the user to pick one of them and then return the id of what ever location is picked
+    public static int selectPickUpLocation(){
         Connection conn = Main.establishConnection();
         int locationId = 0;
 
@@ -147,7 +143,7 @@ public class Location {
                     }
                 }
                 if(!isFound){
-                    System.out.println("The location id selected is not part of the list! try again");
+                    System.err.println("The location id selected is not part of the list! try again");
                     locationId = validateNumber(stdin.nextLine());
                 }
             }
@@ -173,7 +169,7 @@ public class Location {
 
             } catch (NumberFormatException e) {
 
-                System.out.println("invalid number entered! Try again");
+                System.err.println("invalid number entered! Try again");
                 input = stdin.nextLine();
 
             }
