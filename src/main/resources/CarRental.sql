@@ -127,17 +127,21 @@ INSERT INTO booking_services (service_type, registration_plate, service_status) 
                                                                                     ('Tire Replacement', 'VW12XYZ', 'In Progress'),
                                                                                     ('Engine Repair', 'ZX34ABC', 'Completed');
 
+
+
 -- Create admins table
 CREATE TABLE admins (
                         admin_id SERIAL PRIMARY KEY,
-                        username VARCHAR(30) NOT NULL UNIQUE
+                        username VARCHAR(30) NOT NULL UNIQUE,
+                        password VARCHAR(30) NOT NULL UNIQUE
+
 );
 
 -- Insert data into admins table
-INSERT INTO admins (username) VALUES
-                                  ('admin01'),
-                                  ('adminjane43'),
-                                  ('adminrand32');
+INSERT INTO admins (username,password) VALUES
+                                           ('admin01', 'adminpass321'),
+                                           ('adminjane43', 'admindasd123'),
+                                           ('adminrand32', 'asdfdas123');
 
 -- Select data from admins table
 SELECT * FROM admins;
