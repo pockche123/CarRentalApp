@@ -82,4 +82,21 @@ class BookingRentalTests {
         verify(mockStmt, times(1)).executeUpdate();
     }
 
+
+    @Test
+    public void testchangeBookingRentalStatus() throws SQLException {
+        Connection mockConn = mock(Connection.class);
+        PreparedStatement mockStmt = mock(PreparedStatement.class);
+
+        when(mockConn.prepareStatement(anyString())).thenReturn(mockStmt);
+
+        PreparedStatement stmt = mockConn.prepareStatement("UPDATE booking_rentals  SET suspend  = ? WHERE booking_rental_id = ?");
+
+        stmt.setBoolean(1, true);
+        stmt.setInt(2, 1);
+        stmt.executeUpdate();
+        verify(mockStmt, times(1)).executeUpdate();
+
+    }
+
 }
