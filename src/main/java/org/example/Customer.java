@@ -1,4 +1,6 @@
 package org.example;
+import java.sql.*;
+import java.util.Scanner;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +10,7 @@ import java.util.Scanner;
 public class Customer
 {
     private int customer_id;
+    private static Scanner stdin = new Scanner(System.in);
     public Customer() {
     }
     public Customer(int customer_id) {
@@ -19,8 +22,34 @@ public class Customer
     public int getCustomer_id() {
         return customer_id;
     }
-    public static Scanner stdin = new Scanner(System.in);
 
+
+    public static int login() {
+        try (Connection conn = Main.establishConnection()){
+            System.out.println("Please enter your Username:");
+            String userName = stdin.nextLine();
+            System.out.println("Please enter your Password:");
+            String password = stdin.nextLine();
+            String query = "SELECT * FROM customers WHERE username = ? AND password = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, userName.trim());
+            stmt.setString(2, password.trim());
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()){
+                return rs.getInt("customer_id");
+            }else {
+                System.err.println("Customer not found. Invalid credentials.");
+                return -1;
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+ 
     public static void validateRegistration(){
 
         System.out.println("Welcome to customer registration");
