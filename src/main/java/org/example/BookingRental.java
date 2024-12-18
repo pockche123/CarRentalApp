@@ -44,6 +44,16 @@ public class BookingRental{
                         bookingRentalId, paymentId, registrationPlate, dropoffLocationId, customerId, suspend);
             }
 
+            System.out.println("Press 'x' to go back");
+            String input = stdin.nextLine();
+            while(!input.equalsIgnoreCase("x")){
+                System.err.println("Please pick a valid option!");
+                input = stdin.nextLine();
+            }
+            if(input.equalsIgnoreCase("x")){
+                Menu.gotToCustomerMenu(customer_id);
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
@@ -215,7 +225,7 @@ public class BookingRental{
             ;
         } else {
              Menu.goToAdminMenu();
-//            take me back to main admin menu
+
         }
         ;
     }
@@ -259,6 +269,10 @@ public class BookingRental{
         int location_id = Location.selectPickUpLocation();
 
         ArrayList<String> cars = Car.viewAllAvailableCarsForALocation(location_id);
+        if(cars.isEmpty()){
+            System.err.println("Please select from another location other than "+ location_id);
+            bookingRentalMenu(customer_id);
+        }
         String reg_plate = Car.selectCar(cars);
 
         System.out.println();
@@ -269,6 +283,15 @@ public class BookingRental{
        if(createBookingRental(payment_id, reg_plate, dropOffLocation, customer_id)){
            Car.changeCarStatus(reg_plate, "rented");
            System.out.println("Booking Rental created successfully.");
+           System.out.println("Press 1 to book another rental");
+           System.out.println("Press 'x' to go to Customer Menu");
+           String input = stdin.nextLine();
+           if(input.equals("1")){
+               bookingRentalMenu(customer_id);
+           } else if(input.equalsIgnoreCase("x")){
+               Menu.gotToCustomerMenu(customer_id);
+
+           }
        } else{
            System.out.println("Booking Rental unsuccessful.");
        };

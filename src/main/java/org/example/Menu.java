@@ -167,9 +167,9 @@ public class Menu {
         }
 
         if (choice.equals("1")){
-            goToCreatRental();
+            BookingRental.bookingRentalMenu(customerId);
         }else if(choice.equals("2")){
-            goToViewRentalBooking();
+            BookingRental.viewAllBookingRentalsByCustomer(customerId);
         } else if(choice.equals("3")){
             startApp();
         } else if(choice.equals("4")){

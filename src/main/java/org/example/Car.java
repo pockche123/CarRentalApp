@@ -194,10 +194,11 @@ public class Car {
         }
 
 
-        System.out.println("Select a car that you will like to book from the list by entering the car registration");
+        System.out.println("Select a car that you will like to book from the list by entering the car registration ");
 
 
         registrationNumber = stdin.nextLine();
+
 
         boolean isFound = false;
         while(!isFound){
