@@ -21,7 +21,7 @@ public class Main {
 //        Car.selectCarForRental(carRegistrationList);
 
         //Car.createCar();
-        Car.viewCarsByType();
+        Car.viewAllAvailableCars();
     }
 
     public static Connection establishConnection() {
