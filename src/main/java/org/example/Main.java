@@ -17,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
 //        System.out.println(BookingService.checkForValidCar("lm19npu"));
 //        System.out.println("lm19npu".toUpperCase());
-        Menu.viewAllCarsMenu();
+        Menu.goToAdminMenu();
 
 
     }

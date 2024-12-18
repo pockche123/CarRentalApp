@@ -86,7 +86,11 @@ public class Menu {
         }
     }
 
-    private static  void goToAdminLogin() {
+    private static void goToAdminLogin() {
+
+    }
+
+    public static  void goToAdminMenu() {
         System.out.println("Please select one of the following options:");
 
         System.out.println("1. View all Cars");
@@ -105,9 +109,9 @@ public class Menu {
         }
 
         if (choice.equals("1")){
-            goToViewAllBooking();
+            viewAllCarsMenu();
         }else if(choice.equals("2")){
-            goToAddCar();
+            addCarMenu();
         }else if(choice.equals("3")){
             goToSuspendACar();
         }else if(choice.equals("3")){
@@ -185,9 +189,34 @@ public class Menu {
 
     public static void addCarMenu(){
         System.out.println("Add a Car Menu");
+//        System.out.println("Press 'x' to CANCEL");
+//        String choice = stdin.nextLine().trim();
+//        while (!choice.equalsIgnoreCase("x")){
+//            System.err.println("Invalid choice. Please pick a valid option from the menu");
+//            choice = stdin.nextLine().trim();
+//        }
+//        if(choice.equalsIgnoreCase("x")){
+//            goToAdminLogin();
+//        }
         Car.createCar();
+        System.out.println("Press '1' to ADD ANOTHER CAR");
+        System.out.println("Press 'x' to go back to ADMIN MENU");
+        System.out.println();
+        String input = stdin.nextLine().trim();
+        while (!input.equals("1") && !input.equals("x")){
+            System.err.println("Invalid choice. Please pick a valid option from the menu");
+            input = stdin.nextLine().trim();
+        }
+        if(input.equals("1")){
+            addCarMenu();
+        }
+        if(input.equalsIgnoreCase("x")){
+            goToAdminMenu();
+        }
 
     }
+
+
 
     public static void viewAllCarsMenu(){
         System.out.println("View all cars menu");
@@ -215,14 +244,14 @@ public class Menu {
                 viewAllCarsMenu();
             }
             if(input2.equalsIgnoreCase("x")){
-                goToAdminLogin();
+                goToAdminMenu();
             }
 
 
 
         }
         if(input.equalsIgnoreCase("x")){
-            goToAdminLogin();
+            goToAdminMenu();
         }
 
 
