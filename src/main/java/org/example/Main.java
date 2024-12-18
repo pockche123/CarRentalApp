@@ -17,8 +17,10 @@ public class Main {
     public static void main(String[] args) {
 
 //        Location.createLocation();
-        ArrayList<String> carRegistrationList = Car.viewAllAvailableCarsForALocation(Location.selectPickUpLocation());
-        Car.selectCarForRental(carRegistrationList);
+//        ArrayList<String> carRegistrationList = Car.viewAllAvailableCarsForALocation(Location.selectPickUpLocation());
+//        Car.selectCarForRental(carRegistrationList);
+
+        Car.createCar();
     }
 
     public static Connection establishConnection() {

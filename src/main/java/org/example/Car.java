@@ -49,7 +49,7 @@ public class Car {
     }
 
 
-    public static String selectCarForRental(ArrayList<String> carRegistrationList){
+    public static String selectCar(ArrayList<String> carRegistrationList){
         Connection conn = Main.establishConnection();
         String registrationNumber;
 
@@ -82,5 +82,113 @@ public class Car {
         System.out.printf("You have chosen to book the car with registration number %s", registrationNumber.toUpperCase());
 
         return registrationNumber.toUpperCase();
+    }
+
+
+    public static void createCar(){
+        Connection conn = Main.establishConnection();
+
+        try{
+            System.out.printf("Please enter the registration number: ");
+            String registration = "";
+            boolean isRegValid = false;
+            while(!isRegValid){
+                registration = stdin.nextLine();
+                if(registration.length() == 7){
+                    isRegValid = true;
+                }
+                else{
+                    System.out.println("The vehicle registration must be 7 characters long! try again >");
+                }
+            }
+
+            System.out.printf("Please enter the car type: ");
+            String carType = stdin.nextLine();
+
+            System.out.printf("Please enter the make of the car: ");
+            String carMake = stdin.nextLine();
+
+            System.out.printf("Please enter the model of the car: ");
+            String carModel = stdin.nextLine();
+
+            System.out.println("Select the pick up location from the available locations below by entering the location ID >");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM locations");
+            ResultSet rs = pstmt.executeQuery();
+
+            //create an array list to store all location ids
+            ArrayList<Integer> locationIdList = new ArrayList<>();
+
+            while(rs.next())
+            {
+                int locationId = rs.getInt("location_id");
+                String country = rs.getString("country");
+                String city = rs.getString("city");
+                String address = rs.getString("address");
+
+                System.out.printf("\t\t%d\t\t%s\t\t\t%s\t\t\t%s\n",
+                        locationId, country, city, address);
+
+                locationIdList.add(locationId);
+            }
+
+
+            boolean isFound = false;
+
+            int locationId = -1;
+            while(!isFound){
+
+                locationId = validateNumber((stdin.nextLine()));
+
+                //check if the id entered by the user is part of the list
+                for(int i = 0; i < locationIdList.size(); i++)
+                {
+                    if(locationId == locationIdList.get(i))
+                    {
+                        isFound = true;
+                        break;
+                    }
+                }
+                if(!isFound){
+                    System.err.println("The ID entered doesn't exist! Try again");
+                }
+
+            }
+            // At this stage the user entered id has been validated
+            pstmt = conn.prepareStatement("INSERT INTO cars (registration_plate, car_type, make, model, car_status, pickup_location_id) VALUES(?,?,?,?,?,?)");
+            pstmt.setString(1, registration.toUpperCase());
+            pstmt.setString(2, carType);
+            pstmt.setString(3, carMake);
+            pstmt.setString(4, carModel);
+            pstmt.setString(5, "available");
+            pstmt.setInt(6, locationId);
+            pstmt.execute();
+
+            System.out.println("Car record added successfully\n");
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public static int validateNumber(String input){
+        boolean isValid = false;
+        int number = 0;
+
+        while(!isValid) {
+
+            try {
+                number = Integer.parseInt(input);
+                isValid = true;
+
+            } catch (NumberFormatException e) {
+
+                System.err.println("invalid number entered! Try again");
+                input = stdin.nextLine();
+
+            }
+        }
+        return number;
     }
 }
