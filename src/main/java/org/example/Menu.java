@@ -78,7 +78,46 @@ public class Menu {
         }
     }
 
-    private static  goToAdminLogin() {
+    private static  void goToAdminLogin() {
+        System.out.println("Please select one of the following options:");
+
+        System.out.println("1. View all Bookings");
+        System.out.println("2. Add a Car");
+        System.out.println("3. Suspend a Car");
+        System.out.println("4. Book a Car for Servicing");
+        System.out.println("5. Go Back");
+        
+        String choice = stdin.nextLine().trim();
+        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3")&& !choice.equals ("4")&& !choice.equals("5"))
+        {
+            System.err.println("Invalid choice. Please pick an option from the menu");
+            choice = stdin.nextLine().trim();
+        }
+
+        if (choice.equals("1")){
+            goToViewAllBooking();
+        }else if(choice.equals("2")){
+            goToAddCar();
+        }else if(choice.equals("3")){
+            goToSuspendACar();
+        }else if(choice.equals("4")){
+            goToBookACarForServiceing();
+        } else if(choice.equals("5")){
+            startApp();
+        }
+        
+    }
+
+    private static void goToBookACarForServiceing() {
+    }
+
+    private static void goToSuspendACar() {
+    }
+
+    private static void goToAddCar() {
+    }
+
+    private static void goToViewAllBooking() {
     }
 
     public static void goToCustomerLogin(){
