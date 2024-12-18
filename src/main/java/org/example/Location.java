@@ -53,7 +53,7 @@ public class Location {
             ResultSet rs = pstmt.executeQuery();
 
             // Print a header for the output
-//            System.out.println("Country|\tCity |\t\tAddress");
+            System.out.println("\t\tCountry\t\t\t\t|\t\t\t\tCity |\t\tAddress");
 
             while(rs.next()){
 

@@ -11,14 +11,14 @@ import static org.mockito.Mockito.times;
 public class BookingServiceTest {
     @Test
     public void testcreateBookingService() throws SQLException {
-        // Mock the Connection and PreparedStatement
+
         Connection mockConn = mock(Connection.class);
         PreparedStatement mockStmt = mock(PreparedStatement.class);
 
-        // When prepareStatement is called, return the mocked PreparedStatement
+
         when(mockConn.prepareStatement(anyString())).thenReturn(mockStmt);
 
-        // Test the method with mocked connection
+
         String insertQuery = "INSERT INTO booking_services (service_type, registration_plate, service_status) VALUES (?, ?, ?)";
         PreparedStatement stmt = mockConn.prepareStatement(insertQuery);
         stmt.setString(1, "repair");
@@ -26,7 +26,7 @@ public class BookingServiceTest {
         stmt.setString(3, "In Progress");
         stmt.executeUpdate();
 
-        // Verify if execute was called
+
         verify(mockStmt, times(1)).executeUpdate();
     }
 
@@ -45,7 +45,7 @@ public class BookingServiceTest {
         ResultSet expected = mock(ResultSet.class);
 
         String reg_plate = "XY231BA";
-        // Step 3: Define the behavior of the mock ResultSet
+
         when(stmt.executeQuery("SELECT * FROM cars where registration_plate = " + reg_plate)).thenReturn(expected);
         when(expected.next()).thenReturn(true, false);  // Simulate one row in the result set
         when(expected.getString("car_type")).thenReturn("Sedan");

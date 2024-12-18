@@ -64,7 +64,7 @@ class BookingRentalTest {
         Statement stmt = mock(Statement.class);
         ResultSet rs = mock(ResultSet.class);
 
-        // Step 3: Define the behavior of the mock ResultSet
+        // Define the behavior of the mock ResultSet
         when(stmt.executeQuery("SELECT * FROM booking_rentals")).thenReturn(rs);
         when(rs.next()).thenReturn(true, false);  // Simulate one row in the result set
 
@@ -76,14 +76,14 @@ class BookingRentalTest {
         when(rs.getInt("customer_id")).thenReturn(404);
         when(rs.getBoolean("suspend")).thenReturn(true);
 
-        // Step 4: Simulate the logic that uses the Statement and ResultSet
+
         ResultSet result = stmt.executeQuery("SELECT * FROM booking_rentals");
 
-        // Step 5: Verify the results
+
         assertNotNull(result);
         assertTrue(result.next()); // Should be true for the first row
 
-        // Verify each column value
+
         assertEquals(101, result.getInt("booking_rental_id"));
         assertEquals(202, result.getInt("payment_id"));
         assertEquals("XYZ 1234", result.getString("registration_plate"));
@@ -91,10 +91,10 @@ class BookingRentalTest {
         assertEquals(404, result.getInt("customer_id"));
         assertTrue(result.getBoolean("suspend")); // Expecting true for suspend
 
-        // Step 6: Verify that the query was executed with the correct customer_id
+
         verify(stmt).executeQuery("SELECT * FROM booking_rentals");
 
-        // Step 7: Clean up or close resources if needed
+
         result.close();
 
     }
@@ -107,7 +107,7 @@ class BookingRentalTest {
         Statement stmt = mock(Statement.class);
         ResultSet rs = mock(ResultSet.class);
 
-        // Step 3: Define the behavior of the mock ResultSet
+        //  behavior of the mock ResultSet
         when(stmt.executeQuery("SELECT * FROM booking_rentals where suspend = true")).thenReturn(rs);
         when(rs.next()).thenReturn(true, false);  // Simulate one row in the result set
 
@@ -119,10 +119,10 @@ class BookingRentalTest {
         when(rs.getInt("customer_id")).thenReturn(404);
         when(rs.getBoolean("suspend")).thenReturn(true);
 
-        // Step 4: Simulate the logic that uses the Statement and ResultSet
+        // Simulate the logic that uses the Statement and ResultSet
         ResultSet result = stmt.executeQuery("SELECT * FROM booking_rentals where suspend = true");
 
-        // Step 5: Verify the results
+        // Verify the results
         assertNotNull(result);
         assertTrue(result.next()); // Should be true for the first row
 
@@ -134,10 +134,10 @@ class BookingRentalTest {
         assertEquals(404, result.getInt("customer_id"));
         assertTrue(result.getBoolean("suspend")); // Expecting true for suspend
 
-        // Step 6: Verify that the query was executed with the correct customer_id
+        // Verify
         verify(stmt).executeQuery("SELECT * FROM booking_rentals where suspend = true");
 
-        // Step 7: Clean up or close resources if needed
+        // Clean up
         result.close();
 
     }
@@ -148,7 +148,7 @@ class BookingRentalTest {
         Connection mockConn = mock(Connection.class);
         PreparedStatement mockStmt = mock(PreparedStatement.class);
 
-        // When prepareStatement is called, return the mocked PreparedStatement
+
         when(mockConn.prepareStatement(anyString())).thenReturn(mockStmt);
 
         // Test the method with mocked connection
@@ -161,7 +161,7 @@ class BookingRentalTest {
         stmt.setBoolean(5, false);
         stmt.executeUpdate();
 
-        // Verify if execute was called
+
         verify(mockStmt, times(1)).executeUpdate();
     }
 
@@ -188,7 +188,7 @@ class BookingRentalTest {
         ResultSet expected = mock(ResultSet.class);
 
         String booking_rental_id = "1";
-        // Step 3: Define the behavior of the mock ResultSet
+        //  Define the behavior of the mock ResultSet
         when(stmt.executeQuery("SELECT * FROM booking_rentals where booking_rental_id = " + booking_rental_id)).thenReturn(expected);
         when(expected.next()).thenReturn(true, false);  // Simulate one row in the result set
         when(expected.getInt("booking_rental_id")).thenReturn(1);

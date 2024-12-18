@@ -2,6 +2,7 @@ package org.example;
 
 import java.rmi.ServerError;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -41,6 +42,16 @@ public class BookingRental{
                 // Print the values to the console
                 System.out.printf("\t\t%d\t\t\t\t\t%d\t\t\t\t%s\t\t\t\t\t\t\t%d\t\t\t\t%d\t\t\t%s\n",
                         bookingRentalId, paymentId, registrationPlate, dropoffLocationId, customerId, suspend);
+            }
+
+            System.out.println("Press 'x' to go back");
+            String input = stdin.nextLine();
+            while(!input.equalsIgnoreCase("x")){
+                System.err.println("Please pick a valid option!");
+                input = stdin.nextLine();
+            }
+            if(input.equalsIgnoreCase("x")){
+                Menu.gotToCustomerMenu(customer_id);
             }
 
         } catch (SQLException e) {
@@ -189,8 +200,11 @@ public class BookingRental{
     public static void suspendMenu() {
         System.out.println("Suspend Booking Rental Menu:");
         viewAllBookingRentalsBySuspend(false);
-        System.out.println("Please enter the Booking Rental ID to suspend: ");
+        System.out.println("Please enter the Booking Rental ID to suspend (or 'x' to CANCEL): ");
         String id = stdin.nextLine();
+        if(id.equalsIgnoreCase("x")){
+            Menu.goToAdminMenu();
+        }
         while (!checkForValidBookingRental(id, false)) {
             System.err.println("Rental ID has to be a number within the table: ");
             id = stdin.nextLine();
@@ -210,8 +224,8 @@ public class BookingRental{
             }
             ;
         } else {
-            System.exit(0);
-//            take me back to main admin menu
+             Menu.goToAdminMenu();
+
         }
         ;
     }
@@ -219,8 +233,11 @@ public class BookingRental{
         public static void unSuspendMenu(){
             System.out.println("UnSuspend Booking Rental Menu:");
             viewAllBookingRentalsBySuspend(true);
-            System.out.println("Please enter the Booking Rental ID to unsuspend: ");
+            System.out.println("Please enter the Booking Rental ID to unsuspend (or 'x' to CANCEL): ");
             String id = stdin.nextLine();
+            if(id.equalsIgnoreCase("x")){
+                Menu.goToAdminMenu();
+            }
             while(! checkForValidBookingRental(id,true)){
                 System.err.println("Rental ID has to be a number within the table: ");
                 id = stdin.nextLine();
@@ -239,22 +256,51 @@ public class BookingRental{
                     System.err.println("Error unsuspending booking rental with id: "+ id);
                 };
             } else{
-                System.exit(0);
+                Menu.goToAdminMenu();
 //            take me back to main admin menu
             };
 
 
 
-
-
-
-
-
-
-
-
-            ;
     }
+
+    public static void bookingRentalMenu(int customer_id){
+        System.out.println("Booking Rental Menu:");
+        int location_id = Location.selectPickUpLocation();
+
+        ArrayList<String> cars = Car.viewAllAvailableCarsForALocation(location_id);
+        if(cars.isEmpty()){
+            System.err.println("Please select from another location other than "+ location_id);
+            bookingRentalMenu(customer_id);
+        }
+        String reg_plate = Car.selectCar(cars);
+
+        System.out.println();
+        int dropOffLocation = Location.selectDropOffLocation();
+
+       int payment_id = Payment.paymentValidation();
+
+       if(createBookingRental(payment_id, reg_plate, dropOffLocation, customer_id)){
+           Car.changeCarStatus(reg_plate, "rented");
+           System.out.println("Booking Rental created successfully.");
+           System.out.println("Press 1 to book another rental");
+           System.out.println("Press 'x' to go to Customer Menu");
+           String input = stdin.nextLine();
+           if(input.equals("1")){
+               bookingRentalMenu(customer_id);
+           } else if(input.equalsIgnoreCase("x")){
+               Menu.gotToCustomerMenu(customer_id);
+
+           }
+       } else{
+           System.out.println("Booking Rental unsuccessful.");
+       };
+
+    };
+
+
+
+
 
 
 

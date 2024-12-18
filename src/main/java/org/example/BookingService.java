@@ -22,9 +22,14 @@ public class BookingService {
         System.out.println("1. Minor Service");
         System.out.println("2. Major Service");
         System.out.println("3. Repair");
-        System.out.println("Please select an option no. from above:");
+        System.out.println("Please select an option no. from above (or 'x' to CANCEL) :");
+
 
         String service_option = stdin.nextLine();
+        if(service_option.equalsIgnoreCase("x")){
+            Menu.goToAdminMenu();
+
+        }
         while(!service_option.equals("1")&& !service_option.equals("2")&& !service_option.equals("3")){
             System.err.println("Please select a valid option no:");
             service_option = stdin.nextLine();
@@ -40,8 +45,11 @@ public class BookingService {
         }
         Car.viewAllAvailableCars();
 
-        System.out.println("Please enter the registration plate number from above to book for service: ");
+        System.out.println("Please enter the registration plate number from above to book for service: (or 'x' to CANCEL) ");
         String reg_plate = stdin.nextLine().toUpperCase();
+        if(reg_plate.equalsIgnoreCase("x")){
+            Menu.goToAdminMenu();
+        }
         while(!checkForValidCar(reg_plate)){
             System.err.println("Please enter a valid plate number from above to book for service: ");
             reg_plate = stdin.nextLine();
@@ -49,8 +57,37 @@ public class BookingService {
         if(createBookingService(service_type, reg_plate.toUpperCase(), "In Progress")){
             Car.changeCarStatus(reg_plate, "In Service");
             System.out.println("Service Booking Created");
+            System.out.println("Press '1' to BOOK ANOTHER SERVICE ");
+            System.out.println("Press 'x' to go back to ADMIN MENU");
+            String input = stdin.nextLine().trim();
+            while (!input.equals("1") && !input.equals("x")){
+                System.err.println("Invalid choice. Please pick a valid option from the menu");
+                input = stdin.nextLine().trim();
+            }
+            if(input.equals("1")){
+                bookingServiceMenu();
+            }
+            if(input.equalsIgnoreCase("x")){
+                Menu.goToAdminMenu();
+            }
+
         } else{
             System.out.println("Service Booking Failed");
+            System.out.println("Press '1' to BOOK ANOTHER SERVICE ");
+            System.out.println("Press 'x' to go back to ADMIN MENU");
+            String input = stdin.nextLine().trim();
+            while (!input.equals("1") && !input.equals("x")){
+                System.err.println("Invalid choice. Please pick a valid option from the menu");
+                input = stdin.nextLine().trim();
+            }
+            if(input.equals("1")){
+                bookingServiceMenu();
+            }
+            if(input.equalsIgnoreCase("x")){
+                Menu.goToAdminMenu();
+            }
+
+
         }
 
 
