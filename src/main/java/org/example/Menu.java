@@ -71,7 +71,21 @@ public class Menu {
         System.out.println("Welcome to Customer Menu");
         System.out.println("Please choose one of the following options:");
         System.out.println("1. Create a rental booking");
-        System.out.println("2. Create a living room");
+        System.out.println("2. Create a view a rental booking");
+
+        String choice = stdin.nextLine().trim();
+        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3")){
+            System.err.println("Invalid choice. Please pick an option from the menu");
+            choice = stdin.nextLine().trim();
+        }
+
+        if (choice.equals("1")){
+            goToCustomerLogin();
+        }else if(choice.equals("2")){
+            startApp();
+        }
+
+
     }
 
 }
