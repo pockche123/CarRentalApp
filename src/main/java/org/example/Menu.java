@@ -1,9 +1,12 @@
 package org.example;
 
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
     private static Scanner stdin =new Scanner(System.in);
+    int customer_id;
     public static void startApp(){
 
 
@@ -86,7 +89,7 @@ public class Menu {
     private static  void goToAdminLogin() {
         System.out.println("Please select one of the following options:");
 
-        System.out.println("1. View all Bookings");
+        System.out.println("1. View all Cars");
         System.out.println("2. Add a Car");
         System.out.println("3. Suspend a Car");
         System.out.println("4. Suspend a Car");
@@ -179,6 +182,27 @@ public class Menu {
 
 
     }
+
+    public static void addCarMenu(){
+        System.out.println("Add a Car Menu");
+        Car.createCar();
+
+    }
+
+    public static void viewAllCarsMenu(){
+        System.out.println("View All Cars Menu");
+        Car.viewAllCars();
+        System.out.println("Press 1 to filter the car by type: ");
+        String input = stdin.nextLine().trim();
+        if(input.equals("1")){
+            Car.viewCarsByType();
+        }
+
+
+
+
+    }
+
 
 
 

@@ -248,16 +248,24 @@ public class BookingRental{
 
     }
 
-    public static void bookingRentalMenu(){
+    public static void bookingRentalMenu(int customer_id){
         System.out.println("Booking Rental Menu:");
         int location_id = Location.selectPickUpLocation();
 
         ArrayList<String> cars = Car.viewAllAvailableCarsForALocation(location_id);
         String reg_plate = Car.selectCar(cars);
+
         System.out.println();
         int dropOffLocation = Location.selectDropOffLocation();
 
-        Payment.paymentValidation();
+       int payment_id = Payment.paymentValidation();
+
+       if(createBookingRental(payment_id, reg_plate, dropOffLocation, customer_id)){
+           Car.changeCarStatus(reg_plate, "rented");
+           System.out.println("Booking Rental created successfully.");
+       } else{
+           System.out.println("Booking Rental unsuccessful.");
+       };
 
     };
 

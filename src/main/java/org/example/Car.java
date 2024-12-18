@@ -19,16 +19,19 @@ public class Car {
             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM cars");
             ResultSet rs = pstmt.executeQuery();
 
+            System.out.printf("%-20s %-15s %-15s %-20s %-10s%n",
+                    "REGISTRATION |", "TYPE|", "MAKE|", "MODEL|", "CAR STATUS");
             while(rs.next()){
 
                 String registration = rs.getString("registration_plate");
                 String carType = rs.getString("car_type");
                 String make = rs.getString("make");
                 String model = rs.getString("model");
+                String status = rs.getString("car_status");
 
 
-                System.out.printf("\t\t%s\t\t%s\t\t%s\t\t%s\n",
-                        registration, carType, make, model);
+                System.out.printf("%-20s %-15s %-15s %-20s %-10s%n",
+                        registration, carType, make, model, status);
             }
 
         }catch (SQLException e){
@@ -51,7 +54,8 @@ public class Car {
             ResultSet rs = pstmt.executeQuery();
 
             // Print a header for the output
-            System.out.println("Registration Plate |\tCar Type |\t\tMake |\t\t\tModel");
+            System.out.printf("%-20s %-15s %-15s %-20s %n",
+                    "REGISTRATION |", "TYPE|", "MAKE|", "MODEL|");
 
 
             while(rs.next()){
@@ -63,7 +67,7 @@ public class Car {
 
                 carRegistrationList.add(registration);
 
-                System.out.printf("\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\n",
+                System.out.printf("%-20s %-15s %-15s %-20s %n",
                         registration, carType, make, model);
             }
         }catch (SQLException e){
@@ -121,7 +125,7 @@ public class Car {
         ArrayList<String> carTypeList = new ArrayList<>();
 
         try{
-            PreparedStatement pstmt = conn.prepareStatement("SELECT DISTINCT car_type FROM cars");
+            PreparedStatement pstmt = conn.prepareStatement("SELECT DISTINCT LOWER(car_type) AS car_type FROM cars;");
             ResultSet rs = pstmt.executeQuery();
 
             // Print a header for the output
@@ -157,13 +161,17 @@ public class Car {
             pstmt.setString(1, carTypeInput.toLowerCase().trim());
             ResultSet resultSet = pstmt.executeQuery();
 
-            while(resultSet.next()){
+            System.out.printf("%-20s %-15s %-15s %-20s%n",
+                    "REGISTRATION", "CAR TYPE", "MAKE", "MODEL");
+
+
+            while (resultSet.next()) {
                 String registration = resultSet.getString("registration_plate");
                 String carType = resultSet.getString("car_type");
                 String make = resultSet.getString("make");
                 String model = resultSet.getString("model");
 
-                System.out.printf("\t\t%s\t\t\t%s\t\t\t%s\t\t\t%s\n",
+                System.out.printf("%-20s %-15s %-15s %-20s%n",
                         registration, carType, make, model);
             }
 
@@ -333,4 +341,6 @@ public class Car {
         }
         return number;
     }
+
+
 }
