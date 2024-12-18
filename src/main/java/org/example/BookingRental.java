@@ -69,6 +69,19 @@ public class BookingRental{
         }
     }
 
+    public static void changeSuspendStatus(int booking_rental_id, boolean suspend) {
+
+                try(Connection conn = Main.establishConnection()) {
+                    PreparedStatement stmt = conn.prepareStatement("UPDATE booking_rentals  SET suspend  = ? WHERE booking_rental_id = ?");
+                    stmt.setBoolean(1, suspend );
+                    stmt.setInt(2, booking_rental_id);
+                    stmt.execute();
+                } catch(SQLException e){
+                    throw new RuntimeException(e);
+        }
+
+    }
+
 
 
 
