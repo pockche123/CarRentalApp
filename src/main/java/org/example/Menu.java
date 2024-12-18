@@ -60,6 +60,25 @@ public class Menu {
 
     public static void callAdmin(){
         System.out.println("I am in admin menu");
+        
+        System.out.println("Please select one of the following options:");
+        System.out.println("1. Login");
+        System.out.println("2. Go Back");
+
+        String choice = stdin.nextLine().trim();
+        while(!choice.equals("1")  && !choice.equals("2")){
+            System.err.println("Invalid choice. Please pick an option from the menu");
+            choice = stdin.nextLine().trim();
+        }
+
+        if (choice.equals("1")){
+            goToAdminLogin();
+        } else if(choice.equals("3")){
+            startApp();
+        }
+    }
+
+    private static  goToAdminLogin() {
     }
 
     public static void goToCustomerLogin(){
