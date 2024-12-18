@@ -23,7 +23,7 @@ public class Customer
         return customer_id;
     }
 
-    public static Scanner stdin = new Scanner(System.in);
+
 
     public static int login() {
         try (Connection conn = Main.establishConnection()){
