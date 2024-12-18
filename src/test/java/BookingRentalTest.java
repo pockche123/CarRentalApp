@@ -1,3 +1,4 @@
+import org.example.BookingService;
 import org.junit.jupiter.api.Test;
 
 import static org.mockito.Mockito.*;
@@ -210,4 +211,17 @@ class BookingRentalTest {
 
     }
 
-}
+    @Test
+    void testCheckForInvalidCarRegPlate() throws  SQLException {
+
+        assertFalse(BookingService.checkForValidCar("asdf"));
+        assertFalse(BookingService.checkForValidCar("ABC123"));
+    }
+
+    @Test
+    void testCheckForvalidCarRegPlate() {
+
+    }
+
+
+    }

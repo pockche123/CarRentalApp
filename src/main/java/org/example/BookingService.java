@@ -70,25 +70,25 @@ public class BookingService {
             }
     }
 
-//    public static boolean checkForValidCar(String regplate){
-//        if(regplate == null || regplate.isEmpty()){
-//            return false;
-//        }
-//
-//        try(Connection conn = Main.establishConnection()){
-//        String query = "SELECT * FROM cars WHERE  lower(registration_) = ?";
-//        PreparedStatement stmt = conn.prepareStatement(query);
-//        stmt.setBoolean(1, lower(suspend);  // Set the value for the 'suspend' column
-//        stmt.setInt(2, bookingRental_id);  // Set the value for 'booking_rental_id'
-//        ResultSet rs = stmt.executeQuery(); // Execute the query without passing the query string again
-//
-//        return rs.next();
-//
-//    }catch(SQLException e){
-//        throw new RuntimeException(e);
-//    }
-//
-//    }
+ public static boolean checkForValidCar(String regplate){
+        if(regplate == null || regplate.isEmpty() || regplate.length() != 7){
+            return false;
+        }
+
+        try(Connection conn = Main.establishConnection()){
+        String query = "SELECT * FROM cars WHERE  lower(registration_plate) = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, regplate.trim().toLowerCase());  // Set the value for the 'suspend' column
+
+        ResultSet rs = stmt.executeQuery(); // Execute the query without passing the query string again
+
+        return rs.next();
+
+    }catch(SQLException e){
+        throw new RuntimeException(e);
+    }
+
+    }
 
 
 
