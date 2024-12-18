@@ -2,6 +2,7 @@ package org.example;
 
 import java.rmi.ServerError;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -245,16 +246,24 @@ public class BookingRental{
 
 
 
-
-
-
-
-
-
-
-
-            ;
     }
+
+    public static void bookingRentalMenu(){
+        System.out.println("Booking Rental Menu:");
+        int location_id = Location.selectPickUpLocation();
+
+        ArrayList<String> cars = Car.viewAllAvailableCarsForALocation(location_id);
+        String reg_plate = Car.selectCar(cars);
+        System.out.println();
+        int dropOffLocation = Location.selectDropOffLocation();
+
+        Payment.paymentValidation();
+
+    };
+
+
+
+
 
 
 
