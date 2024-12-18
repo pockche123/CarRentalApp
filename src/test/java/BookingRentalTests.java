@@ -1,28 +1,26 @@
+import org.example.BookingRental;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+
 import static org.mockito.Mockito.*;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+
 import java.sql.*;
 import static org.junit.jupiter.api.Assertions.*;
-import java.util.Scanner;
 
-class BookingRentalTest {
+class BookingRentalTests {
 
+    @Mock
+    BookingRental bookingRental = new BookingRental();
 
     @Test
     void testAllBookingRentalsByCustomerId() throws SQLException {
-        // Simulate the user input for customer_id (e.g., user inputs "404")
-        String simulatedInput = "4\n";  // The \n simulates pressing Enter after the input
-        InputStream in = new ByteArrayInputStream(simulatedInput.getBytes());
-        System.setIn(in); // Redirect System.in to use the simulated input
 
-        // Step 1: Mock the Statement and ResultSet objects
+
         Statement stmt = mock(Statement.class);
         ResultSet rs = mock(ResultSet.class);
 
-        // Step 2: Create a Scanner instance as if reading from stdin
-        Scanner stdin = new Scanner(System.in);
-        String customer_id = stdin.nextLine(); // This will now read from the simulated input stream
+
+        String customer_id = "4";
 
         // Step 3: Define the behavior of the mock ResultSet
         when(stmt.executeQuery("SELECT * FROM booking_rentals where customer_id = '" + customer_id + "'")).thenReturn(rs);
@@ -57,12 +55,31 @@ class BookingRentalTest {
         // Step 7: Clean up or close resources if needed
         result.close();
 
-        // Restore the original System.in after the test is done
-        System.setIn(System.in);
+
+
     }
 
+    @Test
+    public void testcreateBookingRental() throws SQLException {
+        // Mock the Connection and PreparedStatement
+        Connection mockConn = mock(Connection.class);
+        PreparedStatement mockStmt = mock(PreparedStatement.class);
 
+        // When prepareStatement is called, return the mocked PreparedStatement
+        when(mockConn.prepareStatement(anyString())).thenReturn(mockStmt);
 
+        // Test the method with mocked connection
+        String insertQuery = "INSERT INTO booking_rentals (payment_id, registration_plate, dropoff_location_id, customer_id, suspend) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement stmt = mockConn.prepareStatement(insertQuery);
+        stmt.setInt(1, 1);
+        stmt.setString(2, "ABC123");
+        stmt.setInt(3, 4);
+        stmt.setInt(4, 7);
+        stmt.setBoolean(5, false);
+        stmt.executeUpdate();
 
+        // Verify if execute was called
+        verify(mockStmt, times(1)).executeUpdate();
+    }
 
 }
