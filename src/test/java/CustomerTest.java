@@ -8,19 +8,18 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
-public class CustomerTests {
+public class CustomerTest {
 
 
     @Test
     public void testRegisterCustomer() throws SQLException {
-        // Mock the Connection and PreparedStatement
+
         Connection mockConn = mock(Connection.class);
         PreparedStatement mockStmt = mock(PreparedStatement.class);
 
-        // When prepareStatement is called, return the mocked PreparedStatement
+
         when(mockConn.prepareStatement(anyString())).thenReturn(mockStmt);
 
-        // Test the method with mocked connection
         String insertQuery = "INSERT INTO customers (first_name, last_name, address, username, password) VALUES (?,?,?,?,?)";
         PreparedStatement stmt = mockConn.prepareStatement(insertQuery);
         stmt.setString(1, "John");
@@ -30,7 +29,7 @@ public class CustomerTests {
         stmt.setString(5, "password123");
         stmt.executeUpdate();
 
-        // Verify if execute was called
+
         verify(mockStmt, times(1)).executeUpdate();
     }
 

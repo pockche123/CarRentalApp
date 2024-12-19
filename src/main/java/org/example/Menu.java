@@ -1,9 +1,12 @@
 package org.example;
 
+import java.sql.SQLOutput;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
     private static Scanner stdin =new Scanner(System.in);
+    int customer_id;
     public static void startApp(){
 
 
@@ -25,7 +28,11 @@ public class Menu {
             case "3":
                 System.exit(0);
             default:
-                System.err.println("Invalid choice");
+                System.err.println("Invalid choice. Try again.");
+                startApp();
+
+
+
         }
     }
     public static void callCustomer(){
@@ -58,6 +65,8 @@ public class Menu {
     }
 
     private static void goToCustomerRegister() {
+
+        Customer.validateRegistration();
     }
 
 
@@ -69,7 +78,7 @@ public class Menu {
         System.out.println("2. Go Back");
         System.out.println("3. Exit");
         String choice = stdin.nextLine().trim();
-        while(!choice.equals("1")  && !choice.equals("2")){
+        while(!choice.equals("1")  && !choice.equals("2") && !choice.equals("3")){
             System.err.println("Invalid choice. Please pick an option from the menu");
             choice = stdin.nextLine().trim();
         }
@@ -83,13 +92,19 @@ public class Menu {
         }
     }
 
-    private static  void goToAdminLogin() {
+    public static void goToAdminLogin() {
+        System.out.println("Admin Login: ");
+        Admin.login();
+
+    }
+
+    public static  void goToAdminMenu() {
         System.out.println("Please select one of the following options:");
 
-        System.out.println("1. View all Bookings");
+        System.out.println("1. View all Cars");
         System.out.println("2. Add a Car");
         System.out.println("3. Suspend a Car");
-        System.out.println("4. Suspend a Car");
+        System.out.println("4. UnSuspend a Car");
         System.out.println("5. Book a Car for Servicing");
         System.out.println("6. Go Back");
         System.out.println("7. Exit");
@@ -102,15 +117,15 @@ public class Menu {
         }
 
         if (choice.equals("1")){
-            goToViewAllBooking();
+            viewAllCarsMenu();
         }else if(choice.equals("2")){
-            goToAddCar();
+            addCarMenu();
         }else if(choice.equals("3")){
-            goToSuspendACar();
-        }else if(choice.equals("3")){
-            goToUnsuspendACar();
+            BookingRental.suspendMenu();
+        }else if(choice.equals("4")){
+            BookingRental.unSuspendMenu();
         }else if(choice.equals("5")){
-            goToBookACarForServiceing();
+            BookingService.bookingServiceMenu();
         } else if(choice.equals("6")){
             startApp();
         } else if(choice.equals("7")){
@@ -119,46 +134,36 @@ public class Menu {
         
     }
 
-    private static void goToUnsuspendACar() {
-    }
 
-    private static void goToBookACarForServiceing() {
-    }
-
-    private static void goToSuspendACar() {
-    }
-
-    private static void goToAddCar() {
-    }
-
-    private static void goToViewAllBooking() {
-    }
 
     public static void goToCustomerLogin(){
-        System.out.println("Welcome to Customer Login");
+        System.out.println("Customer Login :");
+        Customer.login();
 
-//        if the login is true
-        gotToCustomerMenu();
+
     }
 
-    public static void gotToCustomerMenu(){
+    public static void gotToCustomerMenu(int customerId){
         System.out.println("Welcome to Customer Menu");
         System.out.println("Please choose one of the following options:");
         System.out.println("1. Create a rental booking");
-        System.out.println("2. Create a view a rental booking");
-        System.out.println("3. Exit");
+        System.out.println("2. View a rental booking");
+        System.out.println("3. Go Back");
+        System.out.println("4. Exit");
 
         String choice = stdin.nextLine().trim();
-        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3")){
+        while(!choice.equals("1") && !choice.equals("2") && !choice.equals("3") && !choice.equals("4")){
             System.err.println("Invalid choice. Please pick an option from the menu");
             choice = stdin.nextLine().trim();
         }
 
         if (choice.equals("1")){
-            goToCreatRental();
+            BookingRental.bookingRentalMenu(customerId);
         }else if(choice.equals("2")){
-            goToViewRentalBooking();
+            BookingRental.viewAllBookingRentalsByCustomer(customerId);
         } else if(choice.equals("3")){
+            startApp();
+        } else if(choice.equals("4")){
             System.exit(0);
         }
     }
@@ -180,7 +185,66 @@ public class Menu {
 
     }
 
+    public static void addCarMenu(){
+        System.out.println("Add a Car Menu");
 
+        Car.createCar();
+        System.out.println("Press '1' to ADD ANOTHER CAR");
+        System.out.println("Press 'x' to go back to ADMIN MENU");
+        System.out.println();
+        String input = stdin.nextLine().trim();
+        while (!input.equals("1") && !input.equals("x")){
+            System.err.println("Invalid choice. Please pick a valid option from the menu");
+            input = stdin.nextLine().trim();
+        }
+        if(input.equals("1")){
+            addCarMenu();
+        }
+        if(input.equalsIgnoreCase("x")){
+            goToAdminMenu();
+        }
+
+    }
+
+
+
+    public static void viewAllCarsMenu(){
+        System.out.println("View all cars menu");
+        Car.viewAllCars();
+        System.out.println("Press '1' to filter the car by type (or 'x' to cancel):");
+
+
+        String input = stdin.nextLine().trim();
+        while (!input.equals("1") && !input.equals("x")){
+            System.err.println("Invalid choice. Please pick a valid option from the menu");
+            input = stdin.nextLine().trim();
+        }
+        if(input.equals("1")){
+            Car.viewCarsByType();
+            System.out.println("Press '1' to VIEW ALL CARS ");
+            System.out.println("Press 'x' to go back to ADMIN MENU");
+
+            String input2 = stdin.nextLine().trim();
+            while (!input.equals("1") && !input.equals("x")){
+                System.err.println("Invalid choice. Please pick a valid option from the menu");
+                input = stdin.nextLine().trim();
+            }
+            if(input2.equals("1")){
+                viewAllCarsMenu();
+            }
+            if(input2.equalsIgnoreCase("x")){
+                goToAdminMenu();
+            }
+
+
+
+        }
+        if(input.equalsIgnoreCase("x")){
+            goToAdminMenu();
+        }
+
+
+    }
 
 }
 

@@ -92,8 +92,8 @@ public class Payment {
 
 
 
-    public static void paymentValidation(Payment payment) {
-
+    public static int paymentValidation() {
+        System.out.println("Please enter the payment details: ");
         System.out.println("Please enter a card_type: ");
         System.out.println("1. Credit Card");
         System.out.println("2. Debit Card");
@@ -137,11 +137,12 @@ public class Payment {
             cvc = stdin.nextLine();
 
         }
-
+        Payment payment = new Payment();
         payment.setCard_type(card_type.equals("1") ? "Credit Card" : "Debit Card");
         payment.setCard_number(card_number);
         payment.setExpiry_date(expiry_date);
         payment.setCvv(cvc);
+        return createPayment(payment);
     }
 
     public static int createPayment(Payment payment) {

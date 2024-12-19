@@ -24,27 +24,52 @@ public class Customer
     }
 
 
-    public static int login() {
+    public static void login() {
         try (Connection conn = Main.establishConnection()){
-            System.out.println("Please enter your Login:");
+            System.out.println("Please enter your Login: (or 'x' to cancel): ");
             String userName = stdin.nextLine();
-            System.out.println("Please enter your Password:");
+            if(userName.equalsIgnoreCase("x")){
+                Menu.callCustomer();
+            }
+
+            System.out.println("Please enter your Password (or 'x' to cancel) :");
             String password = stdin.nextLine();
-            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM customers username = " + userName + " password = " + password);
-            String customer_id = stdin.nextLine();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM customers username = "+userName+" password = "+password);
-            if (rs.next()){
-                return rs.getInt("customer_id");
+            if(password.equalsIgnoreCase("x")){
+                Menu.callCustomer();
+            }
+
+            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM customers WHERE username = ? AND password = ?");
+            stmt.setString(1, userName);
+            stmt.setString(2, password);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+
+                Menu.gotToCustomerMenu(rs.getInt("customer_id"));
             }else {
                 System.err.println("Customer not found. Invalid credentials.");
-                return -1;
+                System.out.println("Press '1' to TRY AGAIN. ");
+                System.out.println("Press 'x' to go back to ADMIN HOMEPAGE");
+                String input = stdin.nextLine().trim();
+                while (!input.equals("1") && !input.equals("x")){
+                    System.err.println("Invalid choice. Please pick a valid option from the menu");
+                    input = stdin.nextLine().trim();
+                }
+                if(input.equals("1")){
+                    login();
+                }
+                if(input.equalsIgnoreCase("x")){
+                    Menu.callCustomer();
+                }
+
             }
 
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return -1;
+
     }
 
  
@@ -62,7 +87,22 @@ public class Customer
         System.out.println("5. Please enter your password:");
         String password = stdin.nextLine();
 
-        registerCustomer(first_name, last_name, address, username, password);
+        if(registerCustomer(first_name, last_name, address, username, password)){
+            System.out.println("Customer successfully registered.");
+            System.out.println("Press '1' to LOGIN");
+            System.out.println("Press 'x' to go back to CUSTOMER HOMEPAGE");
+            String input = stdin.nextLine().trim();
+            while (!input.equals("1") && !input.equals("x")){
+                System.err.println("Invalid choice. Please pick a valid option from the menu");
+                input = stdin.nextLine().trim();
+            }
+            if(input.equals("1")){
+                login();
+            }
+            if(input.equalsIgnoreCase("x")){
+                Menu.callCustomer();
+            }
+        };
 
     }
 

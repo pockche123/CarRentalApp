@@ -68,9 +68,9 @@ INSERT INTO cars (registration_plate, car_type, make, model, car_status, pickup_
                                                                                                  ('DF20JKL', 'Estate', 'Audi', 'A4', 'rented', 5),
                                                                                                  ('GH18MNO', 'Coupe', 'Mercedes-Benz', 'C-Class', 'available', 6),
                                                                                                  ('JK15YUR', 'Minivan', 'Volkswagen', 'Sharan', 'rented', 7),
-                                                                                                 ('ZA75TRA', 'Estate', 'BMW', 'Golf', 'in_service', 3),
-                                                                                                 ('VW12XYZ', 'Minivan', 'Toyota', 'Sienna', 'in_repair', 6),
-                                                                                                 ('ZX34ABC', 'Convertible', 'Audi', 'A5', 'in_service', 7);
+                                                                                                 ('ZA75TRA', 'Estate', 'BMW', 'Golf', 'In Service', 3),
+                                                                                                 ('VW12XYZ', 'Minivan', 'Toyota', 'Sienna', 'In Repair', 6),
+                                                                                                 ('ZX34ABC', 'Convertible', 'Audi', 'A5', 'In Service', 7);
 
 -- Create payments table
 CREATE TABLE payments (
