@@ -78,7 +78,7 @@ public class Menu {
         System.out.println("2. Go Back");
         System.out.println("3. Exit");
         String choice = stdin.nextLine().trim();
-        while(!choice.equals("1")  && !choice.equals("2")){
+        while(!choice.equals("1")  && !choice.equals("2") && !choice.equals("3")){
             System.err.println("Invalid choice. Please pick an option from the menu");
             choice = stdin.nextLine().trim();
         }
