@@ -14,7 +14,6 @@ import java.util.concurrent.Callable;
 public class Main {
 
     public static Scanner stdin = new Scanner(System.in);
-    public static Callable<Connection> establishConnection;
 
     public static void main(String[] args) {
 //        System.out.println(BookingService.checkForValidCar("lm19npu"));
@@ -32,6 +31,7 @@ public class Main {
             props.load(input);
         } catch (IOException e) {
             e.printStackTrace();
+
         }
 
 
