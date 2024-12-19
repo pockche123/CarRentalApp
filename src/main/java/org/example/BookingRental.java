@@ -219,8 +219,26 @@ public class BookingRental{
         if (answer.trim().equalsIgnoreCase("y")) {
             if (changeSuspendStatus(Integer.parseInt(id), true)) {
                 System.out.println("You have suspended booking rental with id: " + id);
+                System.out.println("Press 1 to suspend rental");
+                System.out.println("Press 'x' to go to Admin Menu");
+                String input = stdin.nextLine();
+                if(input.equals("1")){
+                    suspendMenu();
+                } else if(input.equalsIgnoreCase("x")){
+                    Menu.goToAdminMenu();
+
+                }
             } else {
                 System.err.println("Error suspending booking rental with id: " + id);
+                System.out.println("Press 1 to suspend rental");
+                System.out.println("Press 'x' to go to Admin Menu");
+                String input = stdin.nextLine();
+                if(input.equals("1")){
+                    suspendMenu();
+                } else if(input.equalsIgnoreCase("x")){
+                    Menu.goToAdminMenu();
+
+                }
             }
             ;
         } else {
@@ -241,6 +259,7 @@ public class BookingRental{
             while(! checkForValidBookingRental(id,true)){
                 System.err.println("Rental ID has to be a number within the table: ");
                 id = stdin.nextLine();
+
             }
             System.out.println("Are you sure you want to unsuspend this booking rental? (Y/N)");
             String answer = stdin.nextLine();
@@ -252,6 +271,15 @@ public class BookingRental{
             if(answer.trim().equalsIgnoreCase("y")){
                 if(changeSuspendStatus(Integer.parseInt(id), false)){
                     System.out.println("You have unsuspended booking rental with id: "+ id);
+                    System.out.println("Press 1 to unsuspend rental");
+                    System.out.println("Press 'x' to go to Admin Menu");
+                    String input = stdin.nextLine();
+                    if(input.equals("1")){
+                        suspendMenu();
+                    } else if(input.equalsIgnoreCase("x")){
+                        Menu.goToAdminMenu();
+
+                    }
                 }else{
                     System.err.println("Error unsuspending booking rental with id: "+ id);
                 };
