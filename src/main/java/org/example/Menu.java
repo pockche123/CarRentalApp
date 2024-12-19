@@ -211,7 +211,7 @@ public class Menu {
     public static void viewAllCarsMenu(){
         System.out.println("View all cars menu");
         Car.viewAllCars();
-        System.out.println("Press '1' to filter the car by type (or 'x' to CANCEL");
+        System.out.println("Press '1' to filter the car by type (or 'x' to cancel):");
 
 
         String input = stdin.nextLine().trim();
