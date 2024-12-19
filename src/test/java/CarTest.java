@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 import org.example.Car;
@@ -54,5 +55,50 @@ public class CarTest {
         verify(mockResultSet, times(2)).getString("car_type");
         verify(mockResultSet, times(2)).getString("make");
         verify(mockResultSet, times(2)).getString("model");
+    }
+
+
+
+    @Test
+    public void testViewAllAvailableCarsForALocation() throws SQLException {
+        //define the location id that will be used to test
+        int locationId = 101;
+
+        // Mock the Main.establishConnection() method to return the mocked connection
+        Mockito.mockStatic(Main.class);
+        when(Main.establishConnection()).thenReturn(mockConnection);
+
+
+        //Define the mocked behaviour
+        when(mockConnection.prepareStatement("SELECT * FROM cars WHERE pickup_location_id = ? AND car_status = ?"))
+                .thenReturn(mockPreparedStatement);
+        when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
+        when(mockResultSet.next()).thenReturn(true, true, false);
+        when(mockResultSet.getString("registration_plate")).thenReturn("CAR123", "CAR456");
+        when(mockResultSet.getString("car_type")).thenReturn("Convertible", "Estate");
+        when(mockResultSet.getString("make")).thenReturn("BMW", "Audi");
+        when(mockResultSet.getString("model")).thenReturn("Z4", "A4");
+
+
+        //call the method under test, passing the locationId
+        ArrayList<String> carRegistrationList = Car.viewAllAvailableCarsForALocation(locationId);
+
+        //Verify that the correct SQL query was executed with the correct parameters
+        verify(mockPreparedStatement).setInt(1, locationId); //location id should be passed correctly
+        verify(mockPreparedStatement).setString(2, "available");
+
+
+        //Verify that the ResultSet methods were called the expected number of times
+        verify(mockResultSet, times(3)).next(); // Called 3 times: 2 rows + 1 false
+        verify(mockResultSet, times(2)).getString("registration_plate");
+        verify(mockResultSet, times(2)).getString("car_type");
+        verify(mockResultSet, times(2)).getString("make");
+        verify(mockResultSet, times(2)).getString("model");
+
+
+        //Assert the result
+        assertEquals(2, carRegistrationList.size());
+        assertTrue(carRegistrationList.contains("CAR123"));
+        assertTrue(carRegistrationList.contains("CAR456"));
     }
 }
