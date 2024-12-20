@@ -131,9 +131,9 @@ public class BookingService {
         try(Connection conn = Main.establishConnection()){
         String query = "SELECT * FROM cars WHERE  lower(registration_plate) = ?";
         PreparedStatement stmt = conn.prepareStatement(query);
-        stmt.setString(1, regplate.trim().toLowerCase());  // Set the value for the 'suspend' column
+        stmt.setString(1, regplate.trim().toLowerCase());
 
-        ResultSet rs = stmt.executeQuery(); // Execute the query without passing the query string again
+        ResultSet rs = stmt.executeQuery();
 
         return rs.next();
 

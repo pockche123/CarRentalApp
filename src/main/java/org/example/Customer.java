@@ -26,7 +26,7 @@ public class Customer
 
     public static void login() {
         try (Connection conn = Main.establishConnection()){
-            System.out.println("Please enter your Login: (or 'x' to cancel): ");
+            System.out.println("Please enter your Username: (or 'x' to cancel): ");
             String userName = stdin.nextLine();
             if(userName.equalsIgnoreCase("x")){
                 Menu.callCustomer();
