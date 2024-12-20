@@ -8,13 +8,6 @@ import java.util.Scanner;
 
 public class BookingRental{
 
-
-    private int booking_rental_id;
-
-
-    public BookingRental(){};
-    public BookingRental(int booking_rental_id){};
-
     public static Scanner stdin = new Scanner(System.in);
     public static void viewAllBookingRentalsByCustomer( int customer_id) {
 
