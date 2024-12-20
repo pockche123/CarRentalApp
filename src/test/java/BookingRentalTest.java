@@ -102,8 +102,6 @@ class BookingRentalTest {
 
     @Test
     void testAllActiveBookingRentals() throws SQLException {
-
-
         Statement stmt = mock(Statement.class);
         ResultSet rs = mock(ResultSet.class);
 
@@ -111,7 +109,7 @@ class BookingRentalTest {
         when(stmt.executeQuery("SELECT * FROM booking_rentals where suspend = true")).thenReturn(rs);
         when(rs.next()).thenReturn(true, false);  // Simulate one row in the result set
 
-        // Mock the data for each column in the result set
+        // mock the data for each column in the result set
         when(rs.getInt("booking_rental_id")).thenReturn(101);
         when(rs.getInt("payment_id")).thenReturn(202);
         when(rs.getString("registration_plate")).thenReturn("XYZ 1234");
@@ -119,14 +117,14 @@ class BookingRentalTest {
         when(rs.getInt("customer_id")).thenReturn(404);
         when(rs.getBoolean("suspend")).thenReturn(true);
 
-        // Simulate the logic that uses the Statement and ResultSet
+        // simulate the logic that uses the Statement and ResultSet
         ResultSet result = stmt.executeQuery("SELECT * FROM booking_rentals where suspend = true");
 
-        // Verify the results
+        // assert
         assertNotNull(result);
         assertTrue(result.next()); // Should be true for the first row
 
-        // Verify each column value
+
         assertEquals(101, result.getInt("booking_rental_id"));
         assertEquals(202, result.getInt("payment_id"));
         assertEquals("XYZ 1234", result.getString("registration_plate"));
@@ -134,24 +132,24 @@ class BookingRentalTest {
         assertEquals(404, result.getInt("customer_id"));
         assertTrue(result.getBoolean("suspend")); // Expecting true for suspend
 
-        // Verify
+        // verify
         verify(stmt).executeQuery("SELECT * FROM booking_rentals where suspend = true");
 
-        // Clean up
+        // clean up
         result.close();
 
     }
 
     @Test
     public void testCreateBookingRental() throws SQLException {
-        // Mock the Connection and PreparedStatement
+        // mock the Connection and PreparedStatement
         Connection mockConn = mock(Connection.class);
         PreparedStatement mockStmt = mock(PreparedStatement.class);
 
 
         when(mockConn.prepareStatement(anyString())).thenReturn(mockStmt);
 
-        // Test the method with mocked connection
+        // test the method with mocked connection
         String insertQuery = "INSERT INTO booking_rentals (payment_id, registration_plate, dropoff_location_id, customer_id, suspend) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement stmt = mockConn.prepareStatement(insertQuery);
         stmt.setInt(1, 1);
@@ -161,7 +159,7 @@ class BookingRentalTest {
         stmt.setBoolean(5, false);
         stmt.executeUpdate();
 
-
+        //verify
         verify(mockStmt, times(1)).executeUpdate();
     }
 

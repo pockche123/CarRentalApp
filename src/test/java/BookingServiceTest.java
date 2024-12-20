@@ -47,7 +47,7 @@ public class BookingServiceTest {
         String reg_plate = "XY231BA";
 
         when(stmt.executeQuery("SELECT * FROM cars where registration_plate = " + reg_plate)).thenReturn(expected);
-        when(expected.next()).thenReturn(true, false);  // Simulate one row in the result set
+        when(expected.next()).thenReturn(true, false);
         when(expected.getString("car_type")).thenReturn("Sedan");
         when(expected.getString("make")).thenReturn("Toyota");
         when(expected.getString("model")).thenReturn("Corolla");

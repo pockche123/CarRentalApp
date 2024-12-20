@@ -103,15 +103,15 @@ public class BookingRental{
 
             Statement stmt = conn.createStatement();
 
-            // Query to select all data from the booking_rentals table
+            // query to select all data from the booking_rentals table
             ResultSet rs = stmt.executeQuery("SELECT * FROM booking_rentals where suspend = " + suspendStatus);
 
-            // Print a header for the output
+            // print a header for the output
             System.out.println("Booking Rental ID | \tPayment ID |\tRegistration Plate |\tDropoff Location ID | \tCustomer ID | \tSuspend");
 
-            // Process each row in the result set
+            // process each row in the result set
             while (rs.next()) {
-                // Retrieve each column value
+                // retrieve each column value
                 int bookingRentalId = rs.getInt("booking_rental_id");
                 int paymentId = rs.getInt("payment_id");
                 String registrationPlate = rs.getString("registration_plate");
@@ -119,7 +119,7 @@ public class BookingRental{
                 int customerId = rs.getInt("customer_id");
                 boolean suspend = rs.getBoolean("suspend");
 
-                // Print the values to the console
+
                 System.out.printf("\t\t%d\t\t\t\t\t%d\t\t\t\t%s\t\t\t\t\t\t\t%d\t\t\t\t%d\t\t\t%s\n",
                         bookingRentalId, paymentId, registrationPlate, dropoffLocationId, customerId, suspend);
             }

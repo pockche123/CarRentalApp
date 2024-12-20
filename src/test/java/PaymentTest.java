@@ -50,25 +50,25 @@ public class PaymentTest {
 
 
     @Test
-    void test_createBookingRental() throws SQLException {
-        // Mocking Connection and PreparedStatement
+    void test_createPayment() throws SQLException {
+        // mocking Connection and PreparedStatement
         Connection mockConn = mock(Connection.class);
         PreparedStatement mockStmt = mock(PreparedStatement.class);
 
-        // Set up mock behavior for prepareStatement and executeUpdate
+        // set up mock behavior for prepareStatement and executeUpdate
         when(mockConn.prepareStatement(anyString())).thenReturn(mockStmt);
 
         String insertQuery = "INSERT INTO payments (card_type, card_number, expiry_date, cvc) VALUES (?, ?, ?, ?)";
         PreparedStatement insertStmt = mockConn.prepareStatement(insertQuery);
 
-        // Insert payment details into the database
+        // insert payment details into the database
         insertStmt.setString(1, "Debit Card");
         insertStmt.setString(2, "1234567897654512");
         insertStmt.setString(3, "1032");
         insertStmt.setString(4, "399");
         insertStmt.executeUpdate();
 
-        // Verify that executeUpdate() was called once
+        // verify that executeUpdate() was called once
         verify(mockStmt, times(1)).executeUpdate();
     }
 
