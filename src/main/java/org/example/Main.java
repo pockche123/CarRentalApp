@@ -13,11 +13,8 @@ import java.util.concurrent.Callable;
 
 public class Main {
 
-    public static Scanner stdin = new Scanner(System.in);
-
     public static void main(String[] args) {
-//        System.out.println(BookingService.checkForValidCar("lm19npu"));
-//        System.out.println("lm19npu".toUpperCase());
+
         Menu.startApp();
 
     }

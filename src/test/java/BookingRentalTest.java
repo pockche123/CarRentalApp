@@ -19,11 +19,11 @@ class BookingRentalTest {
 
         String customer_id = "4";
 
-        // Step 3: Define the behavior of the mock ResultSet
+        // define the behavior of the mock ResultSet
         when(stmt.executeQuery("SELECT * FROM booking_rentals where customer_id = '" + customer_id + "'")).thenReturn(rs);
         when(rs.next()).thenReturn(true, false);  // Simulate one row in the result set
 
-        // Mock the data for each column in the result set
+        // mock the data
         when(rs.getInt("booking_rental_id")).thenReturn(101);
         when(rs.getInt("payment_id")).thenReturn(202);
         when(rs.getString("registration_plate")).thenReturn("XYZ 1234");
@@ -31,15 +31,15 @@ class BookingRentalTest {
         when(rs.getInt("customer_id")).thenReturn(404);
         when(rs.getBoolean("suspend")).thenReturn(true);
 
-        // Step 4: Simulate the logic that uses the Statement and ResultSet
+        // simulate the logic that uses the Statement and ResultSet
         ResultSet result = stmt.executeQuery("SELECT * FROM booking_rentals where customer_id = '" + customer_id + "'");
 
 
-        // Step 5: Verify the results
+        // assert
         assertNotNull(result);
         assertTrue(result.next()); // Should be true for the first row
 
-        // Verify each column value
+        // verify
         assertEquals(101, result.getInt("booking_rental_id"));
         assertEquals(202, result.getInt("payment_id"));
         assertEquals("XYZ 1234", result.getString("registration_plate"));
@@ -47,10 +47,10 @@ class BookingRentalTest {
         assertEquals(404, result.getInt("customer_id"));
         assertTrue(result.getBoolean("suspend")); // Expecting true for suspend
 
-        // Step 6: Verify that the query was executed with the correct customer_id
+
         verify(stmt).executeQuery("SELECT * FROM booking_rentals where customer_id = '4'");
 
-        // Step 7: Clean up or close resources if needed
+        // clean up or close resources if needed
         result.close();
 
 
@@ -64,11 +64,11 @@ class BookingRentalTest {
         Statement stmt = mock(Statement.class);
         ResultSet rs = mock(ResultSet.class);
 
-        // Define the behavior of the mock ResultSet
+        // define the behaviour
         when(stmt.executeQuery("SELECT * FROM booking_rentals")).thenReturn(rs);
         when(rs.next()).thenReturn(true, false);  // Simulate one row in the result set
 
-        // Mock the data for each column in the result set
+        // mock the data for each column in the result set
         when(rs.getInt("booking_rental_id")).thenReturn(101);
         when(rs.getInt("payment_id")).thenReturn(202);
         when(rs.getString("registration_plate")).thenReturn("XYZ 1234");
@@ -186,7 +186,7 @@ class BookingRentalTest {
         ResultSet expected = mock(ResultSet.class);
 
         String booking_rental_id = "1";
-        //  Define the behavior of the mock ResultSet
+        //  define the behavior of the mock ResultSet
         when(stmt.executeQuery("SELECT * FROM booking_rentals where booking_rental_id = " + booking_rental_id)).thenReturn(expected);
         when(expected.next()).thenReturn(true, false);  // Simulate one row in the result set
         when(expected.getInt("booking_rental_id")).thenReturn(1);
