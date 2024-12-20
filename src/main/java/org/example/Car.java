@@ -330,7 +330,7 @@ public class Car {
             pstmt.setString(2, registration);
             pstmt.execute();
 
-            System.out.println("Car status updated successfully successfully\n");
+            System.out.println("Car status updated successfully\n");
         }catch (SQLException e){
             e.printStackTrace();
         }
